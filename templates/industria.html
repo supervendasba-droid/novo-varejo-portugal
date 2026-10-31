@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}Portal da Indústria & Distribuição | Novo Varejo Portugal{% endblock %}
+
+{% block content %}
+<div class="text-slate-800">
+
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white border-b border-slate-800">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/90 border border-amber-500/30 text-amber-300 text-xs font-bold mb-5">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>Pilar 3 • Inteligência Comercial para Fabricantes & Distribuidores</span>
+      </span>
+
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+        Inteligência para Quem Vende ao Retalho
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-3xl mx-auto">
+        A indústria conhece o seu produto, o seu portfólio e a sua margem de fábrica. O Novo Varejo ajuda a compreender <strong>onde o retalho cresce, quais redes ganham relevância e onde existem espaços comerciais pouco explorados no linear.</strong>
+      </p>
+
+      <!-- Comparativo da Indústria (Slide 79) -->
+      <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto text-left text-xs">
+        <div class="bg-slate-900/90 p-5 rounded-2xl border border-slate-800">
+          <span class="text-slate-400 font-bold uppercase text-[10px] block">A Indústria Normalmente Sabe:</span>
+          <ul class="mt-3 space-y-2 text-slate-300">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-500"></i> As características técnicas do seu produto</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-500"></i> O seu custo de produção e margem industrial</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-4 h-4 text-slate-500"></i> O preço de tabela de saída da fábrica</li>
+          </ul>
+        </div>
+
+        <div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/30 bg-amber-950/10">
+          <span class="text-amber-400 font-bold uppercase text-[10px] block">Mas Precisa Compreender com o Novo Varejo:</span>
+          <ul class="mt-3 space-y-2 text-white">
+            <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i> Onde o retalho independente e franchisado está a crescer</li>
+            <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i> Qual a taxa de rutura de gôndola nos fins de semana</li>
+            <li class="flex items-center gap-2"><i data-lucide="arrow-right" class="w-4 h-4 text-amber-400"></i> Como o perfil da loja dita o sell-out real ao consumidor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPORTUNIDADES COMERCIAIS MAPEADAS -->
+  <section class="py-12 lg:py-16 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-200 gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
+            Vitrina Demonstrativa de Oportunidades
+          </span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+            Gaps de Categoria e Oportunidades de Sell-Out
+          </h2>
+          <p class="text-xs text-slate-500 mt-1">Exemplos reais identificados nas auditorias de chão de loja da nossa consultoria:</p>
+        </div>
+
+        <div class="bg-white border border-slate-200 p-4 rounded-2xl text-right shadow-2xs shrink-0">
+          <span class="text-[10px] text-slate-400 font-semibold block uppercase">Potencial Comercial Imediato</span>
+          <span class="text-2xl font-black text-amber-600">+24.100 € / mês</span>
+          <span class="text-[10px] text-slate-500 block">Em reposição otimizada para fornecedores</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% for o in oportunidades %}
+        <div class="bg-white border border-slate-200 rounded-3xl p-6 shadow-xs flex flex-col justify-between hover:shadow-md transition-all">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-[11px] font-bold text-slate-500 uppercase">{{ o.regiao_oportunidade }}</span>
+              <span class="text-xs font-extrabold px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                Rutura: {{ o.taxa_rutura_linear }}%
+              </span>
+            </div>
+
+            <div class="mt-4">
+              <span class="text-xs font-bold text-amber-700 uppercase tracking-wider block">{{ o.marca_parceira }}</span>
+              <h3 class="text-base font-bold text-slate-900 mt-0.5">{{ o.categoria }}</h3>
+            </div>
+
+            <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 leading-relaxed">
+              <strong>Diagnóstico de Chão de Loja:</strong>
+              <p class="mt-1">{{ o.diagnostico_gondola }}</p>
+            </div>
+          </div>
+
+          <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-slate-400 block font-semibold uppercase">Ganho Sell-Out Estimado</span>
+              <span class="text-base font-black text-emerald-700">+{{ o.potencial_sellout_euros }} € / mês</span>
+            </div>
+            <button @click="modalLead = true"
+                    class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs transition-all cursor-pointer">
+              Falar com o Consultor
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

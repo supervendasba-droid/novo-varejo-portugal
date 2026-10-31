@@ -1,0 +1,736 @@
+{% extends 'base.html' %}
+
+{% block title %}Novo Varejo | Consultoria Automóvel & Mobilidade 360º • Stand, Oficina e Rent-a-Car em Portugal{% endblock %}
+
+{% block content %}
+<div x-data="automovelApp()" x-init="initAutomovel()" class="text-slate-800">
+
+  <!-- ==========================================
+       HERO EXECUTIVO - SETOR AUTOMÓVEL & MOBILIDADE (CLARO, LEVE E MODERNO)
+  ========================================== -->
+  <section class="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-white via-slate-50/60 to-slate-100/40 text-slate-900 border-b border-slate-200/70">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+      <div class="absolute -top-24 left-1/4 w-[500px] h-[500px] bg-sky-500/5 rounded-full blur-3xl"></div>
+      <div class="absolute top-1/3 -right-24 w-[450px] h-[450px] bg-emerald-500/5 rounded-full blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Badge de Alternância de Setores -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+        <div class="inline-flex items-center gap-1.5 p-1 rounded-full bg-slate-100 border border-slate-200 text-xs">
+          <a href="{% url 'core:home' %}" class="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 font-medium">
+            <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
+            <span>Retalho & Supermercados</span>
+          </a>
+          <span class="px-4 py-1.5 rounded-full bg-slate-900 text-white font-bold shadow-xs flex items-center gap-1.5">
+            <i data-lucide="car" class="w-3.5 h-3.5 text-[#7A7423]"></i>
+            <span>Automóvel & Mobilidade 360º</span>
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-slate-500">
+          <span class="w-2 h-2 rounded-full bg-[#7A7423] animate-pulse"></span>
+          <span>Dados Live • SAF-T Automóvel & ERP Integrados</span>
+        </div>
+      </div>
+
+      <div class="text-center max-w-4xl mx-auto">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-semibold mb-6 shadow-xs">
+          <span class="w-2 h-2 rounded-full bg-[#7A7423] animate-pulse"></span>
+          <span>Auditoria Cirúrgica para Stand de Vendas • Oficina & Aftersales • Frotas de Rent-a-Car</span>
+        </div>
+
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.14] text-slate-950">
+          Rentabilize o Stand, Elimine Horas Mortas na Oficina e Maximize o <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-700 to-slate-900">RevPAV da Frota</span>.
+        </h1>
+
+        <p class="mt-6 text-base sm:text-xl text-slate-600 leading-relaxed font-normal max-w-3xl mx-auto">
+          Consultoria especializada e Business Intelligence para sócios-gerentes de empresas automóveis em Portugal que necessitam de controlar o <strong>custo de chão de fábrica (Floor Plan)</strong>, a <strong>taxa de absorção da oficina</strong> e o <strong>Regime da Margem de IVA (DL 199/96)</strong>.
+        </p>
+
+        <!-- Indicadores de Impacto em Cartões Claros -->
+        <div class="mt-12 pt-8 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-3 gap-5 text-center">
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="text-3xl sm:text-4xl font-extrabold text-emerald-600">+177.000 €</div>
+            <div class="text-xs text-slate-700 font-bold mt-1">Recuperados por Concessão / Ano</div>
+            <span class="text-[11px] text-slate-500 block mt-0.5">Em giro de stock, horas de oficina e pricing de frota</span>
+          </div>
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="text-3xl sm:text-4xl font-extrabold text-slate-900">72% → 88%</div>
+            <div class="text-xs text-slate-700 font-bold mt-1">Taxa de Absorção Alvo da Oficina</div>
+            <span class="text-[11px] text-slate-500 block mt-0.5">Cobrir custos fixos globais apenas com o pós-venda</span>
+          </div>
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs">
+            <div class="text-3xl sm:text-4xl font-extrabold text-slate-900">DL 199/96</div>
+            <div class="text-xs text-slate-700 font-bold mt-1">Blindagem Fiscal do Regime da Margem</div>
+            <span class="text-[11px] text-slate-500 block mt-0.5">Conformidade com a Autoridade Tributária e SAF-T</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PAINEL DE BI AUTOMÓVEL EM 5 ECRÃS
+  ========================================== -->
+  <section class="py-12 lg:py-16 bg-slate-100/70 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- CONTAINER DO DASHBOARD BI -->
+      <div class="bg-white rounded-3xl border border-slate-200/90 shadow-xl overflow-hidden transition-all">
+
+        <!-- CABEÇALHO DO DASHBOARD -->
+        <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 text-white px-6 sm:px-8 py-6 border-b border-slate-800">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-sky-500 text-slate-950 flex items-center justify-center font-black shadow-md shadow-sky-500/20">
+                <i data-lucide="car" class="w-6 h-6"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-sky-950 text-sky-400 border border-sky-800">
+                    Concessão Piloto • Dados SAF-T & ERP
+                  </span>
+                  <span class="text-xs text-slate-400 hidden sm:inline">• Leiria (Zona Industrial Sul)</span>
+                </div>
+                <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2 mt-0.5">
+                  {{ empresa.nome }}
+                  <span class="text-xs font-normal text-slate-400 hidden md:inline">
+                    (Stand 35 Viaturas • Oficina 6 Elevadores • Rent-a-Car 48 Carros)
+                  </span>
+                </h3>
+              </div>
+            </div>
+
+            <!-- Resumo Rápido Topo -->
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="bg-slate-800/80 border border-slate-700/80 px-4 py-2 rounded-2xl text-xs flex items-center gap-4">
+                <div>
+                  <span class="text-slate-400 block text-[10px] font-semibold uppercase">Faturação Global</span>
+                  <span class="font-bold text-white text-sm">380.000 €/mês</span>
+                </div>
+                <div class="h-6 w-px bg-slate-700"></div>
+                <div>
+                  <span class="text-slate-400 block text-[10px] font-semibold uppercase">Fuga Consolidada</span>
+                  <span class="font-bold text-rose-400 text-sm">-14.800 €/mês</span>
+                </div>
+              </div>
+
+              <button @click="drawerAlertas = true"
+                      class="relative flex items-center gap-2 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 px-3.5 py-2 rounded-xl font-semibold text-xs transition-all active:scale-95 cursor-pointer">
+                <i data-lucide="bell" class="w-4 h-4 text-rose-400 animate-pulse"></i>
+                <span>Alertas de Gestão</span>
+                <span class="bg-rose-500 text-slate-950 text-[11px] font-black px-1.5 py-0.2 rounded-full">
+                  {{ alertas.count }}
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- NAVEGAÇÃO DOS 5 ECRÃS -->
+          <div class="mt-6 pt-4 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+            <!-- Ecrã 1 -->
+            <button @click="setTab('pulso')"
+                    :class="activeTab === 'pulso' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
+                    class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
+              <div class="truncate">
+                <div class="text-xs font-bold truncate">1. Pulso Consolidado</div>
+                <div class="text-[10px] opacity-80 truncate">Stand + Oficina + Rent</div>
+              </div>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
+                    :class="activeTab === 'pulso' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
+                -14.800€
+              </span>
+            </button>
+
+            <!-- Ecrã 2 -->
+            <button @click="setTab('stand')"
+                    :class="activeTab === 'stand' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
+                    class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
+              <div class="truncate">
+                <div class="text-xs font-bold truncate">2. Stand & Aging Pátio</div>
+                <div class="text-[10px] opacity-80 truncate">Floor Plan & Margem</div>
+              </div>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
+                    :class="activeTab === 'stand' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
+                {{ viaturas.count }} Carros
+              </span>
+            </button>
+
+            <!-- Ecrã 3 -->
+            <button @click="setTab('oficina')"
+                    :class="activeTab === 'oficina' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
+                    class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
+              <div class="truncate">
+                <div class="text-xs font-bold truncate">3. Oficina & Pós-Venda</div>
+                <div class="text-[10px] opacity-80 truncate">Horas & Absorção</div>
+              </div>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
+                    :class="activeTab === 'oficina' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
+                -5.100€
+              </span>
+            </button>
+
+            <!-- Ecrã 4 -->
+            <button @click="setTab('rentacar')"
+                    :class="activeTab === 'rentacar' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
+                    class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
+              <div class="truncate">
+                <div class="text-xs font-bold truncate">4. Rent-a-Car & Frota</div>
+                <div class="text-[10px] opacity-80 truncate">Ocupação & RevPAV</div>
+              </div>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
+                    :class="activeTab === 'rentacar' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
+                {{ total_carros_frota }} Carros
+              </span>
+            </button>
+
+            <!-- Ecrã 5 -->
+            <button @click="setTab('fiscal')"
+                    :class="activeTab === 'fiscal' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
+                    class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
+              <div class="truncate">
+                <div class="text-xs font-bold truncate">5. Fiscal & Contabilidade</div>
+                <div class="text-[10px] opacity-80 truncate">DL 199/96 & Trib. Aut.</div>
+              </div>
+              <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
+                    :class="activeTab === 'fiscal' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
+                CC / AT
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- CONTEÚDO DOS 5 ECRÃS -->
+        <div class="p-6 sm:p-8 bg-slate-50 min-h-[550px]">
+
+          <!-- ==========================================
+               ECRÃ 1: PULSO CONSOLIDADO DA CONCESSÃO
+          ========================================== -->
+          <div x-show="activeTab === 'pulso'" class="space-y-6">
+            <!-- 3 Polos de Receita -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-sky-700">1. Stand de Vendas</span>
+                  <span class="text-xs font-extrabold text-slate-900">220.000 €/mês</span>
+                </div>
+                <div class="mt-3 flex items-baseline justify-between">
+                  <div>
+                    <span class="text-xs text-slate-500 block">Viaturas em Pátio</span>
+                    <span class="text-xl font-black text-slate-900">{{ viaturas.count }} unidades</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs text-slate-500 block">Fuga Mapeada</span>
+                    <span class="text-base font-extrabold text-rose-600">-6.200 €/mês</span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+                  <strong>Foco:</strong> Juros de Floor Plan acumulados em carros > 60 dias.
+                </div>
+              </div>
+
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-700">2. Oficina & Peças</span>
+                  <span class="text-xs font-extrabold text-slate-900">95.000 €/mês</span>
+                </div>
+                <div class="mt-3 flex items-baseline justify-between">
+                  <div>
+                    <span class="text-xs text-slate-500 block">Taxa de Absorção</span>
+                    <span class="text-xl font-black text-amber-600">72% <span class="text-xs font-normal text-slate-500">(Alvo 88%)</span></span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs text-slate-500 block">Fuga Mapeada</span>
+                    <span class="text-base font-extrabold text-rose-600">-5.100 €/mês</span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+                  <strong>Foco:</strong> Horas mecânicas orçadas não faturadas e margem de peças erodida.
+                </div>
+              </div>
+
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs">
+                <div class="flex items-center justify-between">
+                  <span class="text-xs font-bold uppercase tracking-wider text-indigo-700">3. Rent-a-Car / Frota</span>
+                  <span class="text-xs font-extrabold text-slate-900">65.000 €/mês</span>
+                </div>
+                <div class="mt-3 flex items-baseline justify-between">
+                  <div>
+                    <span class="text-xs text-slate-500 block">Ocupação da Frota</span>
+                    <span class="text-xl font-black text-indigo-600">{{ ocupacao_media }}%</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs text-slate-500 block">Fuga Mapeada</span>
+                    <span class="text-base font-extrabold text-rose-600">-3.500 €/mês</span>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
+                  <strong>Foco:</strong> Tarifação subótima em canais brokers e desmobilização tardia.
+                </div>
+              </div>
+            </div>
+
+            <!-- Gráficos Visuais Chart.js do Setor Automóvel -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <!-- Gráfico Donut de Perdas por Polo -->
+              <div class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Origem das Perdas</span>
+                      <h5 class="text-sm font-bold text-slate-900">Decomposição dos -14.800 €/mês</h5>
+                    </div>
+                    <span class="text-xs font-extrabold px-2.5 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                      -177.600 €/ano
+                    </span>
+                  </div>
+                  <div class="relative py-3 flex items-center justify-center h-52">
+                    <canvas id="autoFugasChart"></canvas>
+                  </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 text-[11px]">
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span><span class="text-slate-600">Stand (Aging): <strong>42%</strong> (6.200€)</span></div>
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span><span class="text-slate-600">Oficina (Horas): <strong>34%</strong> (5.100€)</span></div>
+                  <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span><span class="text-slate-600">Rent (Ocupação): <strong>24%</strong> (3.500€)</span></div>
+                </div>
+              </div>
+
+              <!-- Simulador de ROI da Consultoria Automóvel -->
+              <div class="lg:col-span-7 bg-white border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Simulador de Viabilidade</span>
+                      <h5 class="text-sm font-bold text-slate-900">Retorno da Consultoria na Concessão</h5>
+                    </div>
+                    <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                      ROI Estimado: 5.6x
+                    </span>
+                  </div>
+
+                  <!-- Slider de Meta -->
+                  <div class="mt-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+                      <span class="text-slate-600">Meta de Recuperação de Margem:</span>
+                      <span class="text-sky-700 text-sm font-extrabold" x-text="`${metaAutoPct}% (${formatEuro(valorAutoRecuperadoMes)}/mês)`"></span>
+                    </div>
+                    <input type="range" min="40" max="95" step="5" x-model.number="metaAutoPct"
+                           class="w-full accent-sky-600 cursor-pointer h-2 bg-slate-200 rounded-lg">
+                    <div class="flex justify-between text-[10px] text-slate-400 mt-1 font-medium">
+                      <span>40% (Conservador)</span>
+                      <span>68% (Padrão de Mercado)</span>
+                      <span>95% (Otimização Plena)</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+                  <div class="grid grid-cols-2 gap-3 pb-3 border-b border-emerald-200/80">
+                    <div>
+                      <span class="text-[11px] text-emerald-800 font-semibold block">Lucro Adicional em Caixa</span>
+                      <span class="text-xl font-extrabold text-emerald-700" x-text="`+${formatEuro(lucroAutoMes)}/mês`"></span>
+                    </div>
+                    <div class="text-right">
+                      <span class="text-[11px] text-emerald-800 font-semibold block">Caixa Anual Recuperado</span>
+                      <span class="text-xl font-extrabold text-slate-900" x-text="`+${formatEuro(lucroAutoAno)}`"></span>
+                    </div>
+                  </div>
+                  <div class="pt-2 text-xs text-emerald-900 flex items-center justify-between font-medium">
+                    <span>Avença Mensal da Consultoria: <strong>1.800 €/mês</strong></span>
+                    <span class="font-bold text-emerald-700">Abatimento integral do Raio-X inicial</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               ECRÃ 2: STAND DE VENDAS & AGING DE PÁTIO
+          ========================================== -->
+          <div x-show="activeTab === 'stand'" class="space-y-6">
+            <div class="bg-sky-50 border border-sky-100 rounded-2xl p-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-sky-800">Polo Stand de Usados & Seminovos</span>
+                <h4 class="text-base font-bold text-slate-900 mt-0.5">Gestão de Aging e Custo de Dinheiro Parado (Floor Plan)</h4>
+                <p class="text-xs text-slate-600 mt-1 max-w-2xl">
+                  Cada dia com uma viatura no pátio custa juros bancários à taxa Euribor + spread (7,5% a.a.) além de depreciação de tabela. O sistema identifica os carros da "Curva C" (>60 dias) e calcula o deságio estratégico de venda rápida.
+                </p>
+              </div>
+              <div class="bg-white border border-rose-200 rounded-xl p-3 shrink-0 text-right shadow-2xs">
+                <span class="text-[11px] text-slate-400 block font-medium">Juros Floor Plan Acumulados</span>
+                <span class="text-xl font-extrabold text-rose-600">{{ custo_floor_plan_total }} €</span>
+                <span class="text-[10px] text-slate-500 block">Em {{ viaturas.count }} viaturas auditadas</span>
+              </div>
+            </div>
+
+            <!-- Tabela Interativa de Viaturas -->
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+              <div class="p-4 border-b border-slate-100 flex items-center justify-between">
+                <h5 class="text-sm font-bold text-slate-900">Viaturas Auditadas no Pátio (Stand)</h5>
+                <span class="text-xs text-slate-500 font-medium">Clique em "Aplicar Deságio" para simular a libertação de capital</span>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600">
+                  <thead class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase border-b border-slate-200">
+                    <tr>
+                      <th class="py-3 px-4">Matrícula & Viatura</th>
+                      <th class="py-3 px-3 text-center">Aging (Dias)</th>
+                      <th class="py-3 px-3 text-right">Custo Aquisição</th>
+                      <th class="py-3 px-3 text-right">Floor Plan</th>
+                      <th class="py-3 px-3 text-right">PVP Atual</th>
+                      <th class="py-3 px-3 text-right">PVP Deságio</th>
+                      <th class="py-3 px-3">Regime IVA</th>
+                      <th class="py-3 px-4 text-center">Ação</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    {% for v in viaturas %}
+                    <tr class="hover:bg-slate-50 transition-colors {% if v.dias_em_stock >= 75 %}bg-rose-50/30{% endif %}">
+                      <td class="py-3 px-4">
+                        <div class="font-bold text-slate-900">{{ v.viatura }}</div>
+                        <div class="text-[11px] text-slate-400 font-mono">{{ v.matricula }} • {{ v.ano }} • {{ v.kms }} km</div>
+                      </td>
+                      <td class="py-3 px-3 text-center">
+                        <span class="px-2 py-0.5 rounded-full font-bold text-[10px] {% if v.dias_em_stock >= 75 %}bg-rose-100 text-rose-800 border border-rose-200{% elif v.dias_em_stock >= 45 %}bg-amber-100 text-amber-800{% else %}bg-emerald-100 text-emerald-800{% endif %}">
+                          {{ v.dias_em_stock }} dias
+                        </span>
+                      </td>
+                      <td class="py-3 px-3 text-right font-medium text-slate-800">{{ v.custo_aquisicao }} €</td>
+                      <td class="py-3 px-3 text-right font-bold text-rose-600">-{{ v.custo_financeiro_parado }} €</td>
+                      <td class="py-3 px-3 text-right font-bold text-slate-900">{{ v.pvp_anunciado }} €</td>
+                      <td class="py-3 px-3 text-right font-bold text-emerald-700">{{ v.pvp_desagio_sugerido }} €</td>
+                      <td class="py-3 px-3">
+                        <span class="text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md">
+                          {{ v.regime_iva }}
+                        </span>
+                      </td>
+                      <td class="py-3 px-4 text-center">
+                        <button @click="toggleDesagio({{ v.id }})"
+                                :class="desagiosAtivos[{{ v.id }}] ? 'bg-emerald-600 text-white' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'"
+                                class="px-3 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-2xs">
+                          <span x-text="desagiosAtivos[{{ v.id }}] ? 'Deságio Ativo ✓' : 'Aplicar Deságio'"></span>
+                        </button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               ECRÃ 3: OFICINA & PÓS-VENDA (AFTERSALES)
+          ========================================== -->
+          <div x-show="activeTab === 'oficina'" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Calculadora Taxa de Absorção -->
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Indicador Chave</span>
+                      <h5 class="text-sm font-bold text-slate-900">Taxa de Absorção da Oficina</h5>
+                    </div>
+                    <span class="text-xs font-bold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                      Atual: 72% (Meta 88%)
+                    </span>
+                  </div>
+                  <p class="text-xs text-slate-600 mt-3 leading-relaxed">
+                    A <strong>Taxa de Absorção</strong> mede se a margem bruta da oficina e da venda de peças consegue pagar 100% dos custos fixos de toda a concessão (renda, luz, equipa administrativa e custos do stand). Quando atinge 100%, cada carro vendido no stand é lucro puro!
+                  </p>
+
+                  <div class="mt-4 space-y-3">
+                    <div class="flex justify-between text-xs">
+                      <span class="text-slate-500">Custos Fixos Globais da Concessão:</span>
+                      <span class="font-bold text-slate-900">42.000 € / mês</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                      <span class="text-slate-500">Margem Bruta Atual da Oficina:</span>
+                      <span class="font-bold text-amber-600">30.240 € / mês (72%)</span>
+                    </div>
+                    <div class="flex justify-between text-xs">
+                      <span class="text-slate-500">Défice Coberto pelo Stand:</span>
+                      <span class="font-bold text-rose-600">-11.760 € / mês</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-100 bg-emerald-50 p-3 rounded-xl border border-emerald-200 text-xs text-emerald-900">
+                  <strong>Plano de Ação:</strong> Faturar +1,2 horas/dia por elevador e blindar margem de óleos/peças eleva a absorção para <strong>88%</strong>, gerando <strong>+6.720 €/mês</strong>.
+                </div>
+              </div>
+
+              <!-- Análise de Horas Faturadas vs Pagas -->
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div>
+                      <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Eficiência Laboral</span>
+                      <h5 class="text-sm font-bold text-slate-900">Horas Vendidas no SAF-T vs Horas Pagas</h5>
+                    </div>
+                    <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2.5 py-1 rounded-full border border-rose-200">
+                      -24% de Eficiência
+                    </span>
+                  </div>
+
+                  <div class="mt-4 space-y-2.5">
+                    {% for o in ordens %}
+                    <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs flex items-center justify-between">
+                      <div>
+                        <span class="font-bold text-slate-900">{{ o.numero_or }}</span> • <span class="text-slate-600">{{ o.viatura }}</span>
+                        <div class="text-[10px] text-slate-400">{{ o.tipo_servico }}</div>
+                      </div>
+                      <div class="text-right">
+                        <span class="font-bold text-slate-800">{{ o.horas_faturadas }}h / {{ o.horas_orcamentadas }}h</span>
+                        <span class="text-[10px] text-rose-600 block font-semibold">Perda Peças: -{{ o.perda_margem_pecas }}€</span>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ==========================================
+               ECRÃ 4: RENT-A-CAR & GESTÃO DE FROTA
+          ========================================== -->
+          <div x-show="activeTab === 'rentacar'" class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {% for s in segmentos %}
+              <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs flex flex-col justify-between">
+                <div>
+                  <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+                    {{ s.categoria }}
+                  </span>
+                  <div class="text-sm font-bold text-slate-900 mt-2">{{ s.qtd_viaturas }} Viaturas na Frota</div>
+                  <div class="text-xs text-slate-500 mt-0.5">{{ s.viaturas_exemplo }}</div>
+
+                  <div class="mt-4 space-y-2 pt-3 border-t border-slate-100 text-xs">
+                    <div class="flex justify-between">
+                      <span class="text-slate-500">Taxa de Ocupação:</span>
+                      <span class="font-bold text-indigo-700">{{ s.taxa_ocupacao_atual }}% <span class="text-[10px] text-slate-400">(Meta {{ s.taxa_ocupacao_alvo }}%)</span></span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-500">Diária Média:</span>
+                      <span class="font-bold text-slate-900">{{ s.diaria_media }} €/dia</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-500">RevPAV Atual:</span>
+                      <span class="font-extrabold text-emerald-700">{{ s.revpav_atual }} €/dia</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span class="text-slate-500">TCO por Km:</span>
+                      <span class="font-medium text-slate-600">{{ s.custo_km }} €/km</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-100">
+                  <span class="text-[10px] text-slate-400 block font-medium">Tributação Autónoma (IRC):</span>
+                  <span class="text-xs font-bold text-slate-800">{{ s.tributacao_autonoma }}</span>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- ==========================================
+               ECRÃ 5: FISCAL & CONTABILIDADE (CC)
+          ========================================== -->
+          <div x-show="activeTab === 'fiscal'" class="space-y-6">
+            <div class="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-2xl p-6 border border-blue-900 shadow-md">
+              <span class="text-xs font-bold uppercase tracking-wider text-sky-400 bg-sky-950 px-3 py-1 rounded-full border border-sky-800">
+                Conformidade Fiscal com a Autoridade Tributária
+              </span>
+              <h4 class="text-lg font-bold text-white mt-2">
+                Auditoria do Regime da Margem de IVA (DL n.º 199/96) e Tributação Autónoma (CIRC)
+              </h4>
+              <p class="text-xs text-slate-300 mt-2 max-w-3xl leading-relaxed">
+                As empresas de comércio e reparação automóvel em Portugal sofrem fiscalizações rigorosas sobre a dedutibilidade do IVA em frotas e o enquadramento de bens em segunda mão. A nossa plataforma assegura a rastreabilidade total:
+              </p>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-5">
+                <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-xs">
+                  <strong class="text-sky-300 block mb-1">1. Regime da Margem (DL 199/96)</strong>
+                  <span class="text-slate-300">Garante que o IVA de carros comprados a particulares é liquidado apenas sobre a margem de lucro real.</span>
+                </div>
+                <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-xs">
+                  <strong class="text-sky-300 block mb-1">2. Art.º 21.º do CIVA</strong>
+                  <span class="text-slate-300">Rastreio de IVA de gasóleo (50% dedutível em comerciais vs 0% em ligeiros de passageiros).</span>
+                </div>
+                <div class="bg-slate-800/80 p-3.5 rounded-xl border border-slate-700 text-xs">
+                  <strong class="text-sky-300 block mb-1">3. Tributação Autónoma (Art. 88 CIRC)</strong>
+                  <span class="text-slate-300">Enquadramento de escalões (10%, 25%, 35%) e transição estratégica para frotas híbridas plug-in e elétricas.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       CALCULADORA DE PRÉ-DIAGNÓSTICO AUTOMÓVEL
+  ========================================== -->
+  <section class="py-16 bg-white border-b border-slate-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-100 px-3 py-1 rounded-full border border-sky-300">
+          Simulador para Sócios-Gerentes
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+          Calcule as Fugas Invisíveis da sua Concessão Automóvel
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+          Insira o volume médio mensal dos seus polos para estimar o potencial de recuperação de margem:
+        </p>
+      </div>
+
+      <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-md">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Stand (€/mês):</label>
+            <input type="number" x-model.number="calcStand"
+                   class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Oficina (€/mês):</label>
+            <input type="number" x-model.number="calcOficina"
+                   class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Rent-a-Car (€/mês):</label>
+            <input type="number" x-model.number="calcRent"
+                   class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
+          </div>
+        </div>
+
+        <div class="mt-6 pt-6 border-t border-slate-200 bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <span class="text-xs text-slate-500 font-medium block">Fuga Mapeada Estimada na sua Estrutura:</span>
+            <span class="text-2xl font-black text-rose-600" x-text="`${formatEuro(calcFugaTotalMes)} / mês`"></span>
+            <span class="text-xs text-slate-400 block" x-text="`Equivale a ${formatEuro(calcFugaTotalMes * 12)} / ano em margem perdida`"></span>
+          </div>
+
+          <button @click="modalLead = true"
+                  class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs uppercase tracking-wider shadow-lg shadow-sky-600/20 cursor-pointer transition-all active:scale-95">
+            Agendar Diagnóstico 360º Automóvel
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function automovelApp() {
+    return {
+      activeTab: 'pulso',
+      drawerAlertas: false,
+      metaAutoPct: 68,
+      desagiosAtivos: {},
+
+      calcStand: 220000,
+      calcOficina: 95000,
+      calcRent: 65000,
+
+      get calcFugaTotalMes() {
+        return (this.calcStand * 0.028) + (this.calcOficina * 0.054) + (this.calcRent * 0.053) + 1200;
+      },
+
+      get valorAutoRecuperadoMes() {
+        return Math.round((14800 * this.metaAutoPct) / 100);
+      },
+      get lucroAutoMes() {
+        return this.valorAutoRecuperadoMes - 1800;
+      },
+      get lucroAutoAno() {
+        return this.lucroAutoMes * 12;
+      },
+
+      setTab(tab) {
+        this.activeTab = tab;
+        this.$nextTick(() => {
+          if (window.lucide) window.lucide.createIcons();
+          if (tab === 'pulso') {
+            setTimeout(() => this.initChart(), 80);
+          }
+        });
+      },
+
+      formatEuro(val) {
+        return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val);
+      },
+
+      async toggleDesagio(id) {
+        try {
+          const resp = await fetch(`/api/toggle-desagio/${id}/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCsrfToken()
+            }
+          });
+          const data = await resp.json();
+          if (data.success) {
+            this.desagiosAtivos[id] = data.desagio_aplicado;
+            this.showToast(data.mensagem);
+          }
+        } catch (e) {
+          this.desagiosAtivos[id] = !this.desagiosAtivos[id];
+          this.showToast('Deságio de preço atualizado com sucesso!');
+        }
+      },
+
+      _chartInstance: null,
+      initChart() {
+        if (!window.Chart) return;
+        const el = document.getElementById('autoFugasChart');
+        if (!el) return;
+        if (this._chartInstance) this._chartInstance.destroy();
+
+        this._chartInstance = new Chart(el, {
+          type: 'doughnut',
+          data: {
+            labels: ['Stand (Aging Floor Plan)', 'Oficina (Horas & Peças)', 'Rent-a-Car (Ocupação)'],
+            datasets: [{
+              data: [6200, 5100, 3500],
+              backgroundColor: ['#0284c7', '#f59e0b', '#6366f1'],
+              borderWidth: 2,
+              borderColor: '#ffffff',
+              hoverOffset: 6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => ` ${ctx.label}: ${ctx.raw} €/mês (${Math.round((ctx.raw/14800)*100)}%)`
+                }
+              }
+            },
+            cutout: '70%'
+          }
+        });
+      },
+
+      initAutomovel() {
+        this.$nextTick(() => {
+          if (window.lucide) window.lucide.createIcons();
+          setTimeout(() => this.initChart(), 100);
+        });
+      }
+    };
+  }
+</script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Central de Relatórios & Autos de Quebra | Vértice Retalho Portugal{% endblock %}
+
+{% block content %}
+<div class="bg-slate-50 py-10 lg:py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Cabeçalho -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-slate-200">
+      <div>
+        <div class="flex items-center gap-2 text-xs text-slate-500 font-semibold mb-1">
+          <a href="{% url 'core:home' %}" class="hover:text-sky-600">Início</a>
+          <span>/</span>
+          <span class="text-sky-700">Central Documental</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          Relatórios Executivos & Autos Formais de Quebra
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+          Dossiês técnicos de auditoria para a Gerência e documentos legais para dedução no CMVC perante a Autoridade Tributária e Aduaneira (AT) e Contabilista Certificado (CC).
+        </p>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <a href="{% url 'core:documentos' %}" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold text-xs flex items-center gap-2 shadow-2xs">
+          <i data-lucide="folder-kanban" class="w-4 h-4 text-amber-600"></i>
+          <span>Modelos & Minutas Fiscais</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Indicador de Resumo Fiscal / CMVC -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Total de Perdas Auditadas no Mês</span>
+        <span class="text-2xl font-extrabold text-rose-600 mt-1 block">6.000 € / mês</span>
+        <span class="text-xs text-slate-500 mt-1 block">Comprovadas no SAF-T e balancete</span>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Quebras Formais Abatidas (Art.º 86.º)</span>
+        <span class="text-2xl font-extrabold text-emerald-600 mt-1 block">2.400 € / mês</span>
+        <span class="text-xs text-slate-500 mt-1 block">Com enquadramento fiscal sem penalização de IVA</span>
+      </div>
+      <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs">
+        <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Incongruências de IVA Retificadas</span>
+        <span class="text-2xl font-extrabold text-sky-600 mt-1 block">38 Artigos</span>
+        <span class="text-xs text-slate-500 mt-1 block">Risco fiscal de autuação sanado</span>
+      </div>
+    </div>
+
+    <!-- Grelha de Relatórios Emitidos -->
+    <div class="mt-8 space-y-4">
+      {% for rel in relatorios %}
+      <div class="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-2xs hover:shadow-sm transition-all flex flex-col md:flex-row md:items-center justify-between gap-5">
+        <div class="space-y-2 max-w-3xl">
+          <div class="flex flex-wrap items-center gap-2.5">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+              {{ rel.codigo_doc }}
+            </span>
+            <span class="text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-800 border border-sky-200">
+              {{ rel.get_tipo_display }}
+            </span>
+            <span class="text-xs text-slate-400 font-medium">
+              • {{ rel.periodo }}
+            </span>
+          </div>
+
+          <h3 class="text-base sm:text-lg font-bold text-slate-900 leading-snug">
+            {{ rel.titulo }}
+          </h3>
+
+          <p class="text-xs text-slate-600 leading-relaxed">
+            {{ rel.resumo_executivo }}
+          </p>
+
+          <div class="flex flex-wrap items-center gap-4 text-[11px] text-slate-500 pt-1">
+            <span><strong>Destinatário:</strong> {{ rel.destinatario }}</span>
+            <span>•</span>
+            <span><strong>Assinado:</strong> {{ rel.assinado_por }}</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row md:flex-col items-start md:items-end justify-between gap-3 shrink-0 pt-3 md:pt-0 border-t md:border-t-0 border-slate-100">
+          <div class="text-left md:text-right">
+            <span class="text-[10px] text-slate-400 font-semibold uppercase block">Impacto Auditado</span>
+            <span class="text-lg font-extrabold {% if rel.valor_impacto > 1000 %}text-rose-600{% else %}text-slate-900{% endif %}">
+              {{ rel.valor_impacto }} €
+            </span>
+          </div>
+
+          <a href="{% url 'core:relatorio_detalhe' rel.id %}"
+             class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs flex items-center gap-2 shadow-xs transition-all cursor-pointer">
+            <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+            <span>Consultar & Imprimir Dossiê</span>
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <div class="text-center py-12 bg-white rounded-2xl border border-slate-200 p-8">
+        <p class="text-sm text-slate-500">Nenhum relatório formal registado no período.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

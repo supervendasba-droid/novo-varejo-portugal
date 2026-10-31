@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Terminal do Analista • Inteligência Setorial | Novo Varejo Portugal{% endblock %}
+
+{% block content %}
+<div class="text-slate-800" x-data="analistaApp()" x-init="initAnalista()">
+
+  <!-- HERO DO TERMINAL DO ANALISTA -->
+  <section class="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white border-b border-slate-800">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/90 border border-purple-500/30 text-purple-300 text-xs font-bold mb-5">
+        <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span>
+        <span>Pilar 4 • Terminal de Inteligência Setorial & Dados de Mercado</span>
+      </span>
+
+      <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+        Terminal do Analista
+      </h1>
+
+      <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal max-w-3xl mx-auto">
+        Dados estruturados para executivos, compradores, analistas e gestores de redes que precisam de enxergar o mercado antes de decidir. <strong>Do dado fragmentado para uma leitura analítica do retalho alimentar português.</strong>
+      </p>
+
+      <!-- 12 Módulos do Terminal (Slide 83 do PDF) -->
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-left text-xs">
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">1. Rankings de Redes</span>
+          <span class="text-[10px] text-slate-400">Classificação por faturação e quota.</span>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">2. Faturação Estimada</span>
+          <span class="text-[10px] text-slate-400">Volume anual em milhões de euros.</span>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">3. Número de Lojas</span>
+          <span class="text-[10px] text-slate-400">Presença territorial em Portugal.</span>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">4. Produtividade / m²</span>
+          <span class="text-[10px] text-slate-400">Venda média por metro quadrado.</span>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">5. Quota de Mercado</span>
+          <span class="text-[10px] text-slate-400">Market share percentual auditado.</span>
+        </div>
+        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800">
+          <span class="text-purple-400 font-bold block">6. Concentração</span>
+          <span class="text-[10px] text-slate-400">Índice de domínio dos maiores grupos.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RANKING & GRÁFICO DE CONCENTRAÇÃO SETORIAL -->
+  <section class="py-12 lg:py-16 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Gráfico de Quota de Mercado (Chart.js) -->
+        <div class="lg:col-span-5 bg-white border border-slate-200 rounded-3xl p-6 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Estrutura de Mercado</span>
+                <h4 class="text-sm font-bold text-slate-900">Concentração Setorial em Portugal</h4>
+              </div>
+              <span class="text-xs font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200">
+                Top 2 = 55,3%
+              </span>
+            </div>
+
+            <div class="relative py-4 flex items-center justify-center h-64">
+              <canvas id="marketShareChart"></canvas>
+            </div>
+          </div>
+
+          <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500">
+            <strong>Análise do Consultor:</strong> O mercado português é altamente concentrado entre Sonae MC (Continente) e Jerónimo Martins (Pingo Doce), com a Mercadona a apresentar o maior ganho de quota e a maior produtividade por m² (7.400 €/m²).
+          </div>
+        </div>
+
+        <!-- Tabela do Ranking -->
+        <div class="lg:col-span-7 bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+              <div>
+                <h4 class="text-base font-bold text-slate-900">Ranking das Principais Insígnias em Portugal</h4>
+                <p class="text-xs text-slate-500">Faturação estimada anual, número de unidades e modelo operacional</p>
+              </div>
+              <span class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-full">
+                8 Grupos Mapeados
+              </span>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-600">
+                <thead class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase border-b border-slate-200">
+                  <tr>
+                    <th class="py-3 px-4">#</th>
+                    <th class="py-3 px-4">Insígnia & Grupo</th>
+                    <th class="py-3 px-3 text-right">Faturação</th>
+                    <th class="py-3 px-3 text-center">Lojas</th>
+                    <th class="py-3 px-3 text-right">Quota</th>
+                    <th class="py-3 px-3 text-right">€ / m²</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  {% for r in rankings %}
+                  <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3 px-4 font-black text-slate-900">#{{ r.posicao }}</td>
+                    <td class="py-3 px-4">
+                      <div class="font-bold text-slate-900">{{ r.grupo_insignia }}</div>
+                      <div class="text-[10px] text-slate-400">{{ r.arquetipo_operacao }}</div>
+                    </td>
+                    <td class="py-3 px-3 text-right font-extrabold text-slate-900">{{ r.faturacao_anual_milhoes }} M€</td>
+                    <td class="py-3 px-3 text-center font-bold text-slate-700">{{ r.num_lojas }}</td>
+                    <td class="py-3 px-3 text-right font-black text-purple-700">{{ r.quota_mercado_pct }}%</td>
+                    <td class="py-3 px-3 text-right font-medium text-emerald-700">{{ r.venda_m2_ano }} €</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="p-4 bg-slate-50 border-t border-slate-200 text-xs text-slate-500 flex items-center justify-between">
+            <span>Fonte: Relatórios de Contas Consolidados & Painel de Retalho Novo Varejo</span>
+            <span class="font-bold text-slate-800">Total Auditado: ~14.500 M€</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function analistaApp() {
+    return {
+      initAnalista() {
+        this.$nextTick(() => {
+          const el = document.getElementById('marketShareChart');
+          if (el && window.Chart) {
+            new Chart(el, {
+              type: 'doughnut',
+              data: {
+                labels: [
+                  {% for r in rankings %}
+                  '{{ r.grupo_insignia|escapejs }}',
+                  {% endfor %}
+                ],
+                datasets: [{
+                  data: [
+                    {% for r in rankings %}
+                    {{ r.quota_mercado_pct }},
+                    {% endfor %}
+                  ],
+                  backgroundColor: [
+                    '#0284c7', '#059669', '#f59e0b', '#dc2626',
+                    '#7c3aed', '#ea580c', '#64748b', '#0d9488'
+                  ],
+                  borderWidth: 2,
+                  borderColor: '#ffffff'
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: { display: false },
+                  tooltip: {
+                    callbacks: {
+                      label: (ctx) => ` ${ctx.label}: ${ctx.raw}% de Quota`
+                    }
+                  }
+                },
+                cutout: '65%'
+              }
+            });
+          }
+        });
+      }
+    };
+  }
+</script>
+{% endblock %}

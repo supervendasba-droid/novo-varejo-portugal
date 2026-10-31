@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-PT" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Novo Varejo | Regis Costa • Consultoria de Elite para Supermercados em Portugal{% endblock %}</title>
+
+  <!-- Tipografia de Elite Falconi: Manrope & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Chart.js CDN para Gráficos Financeiros e de BI -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+  <!-- Alpine.js CDN para Reatividade Sem Dependências Externas -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'Inter', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            // Paleta Exata da Falconi (falconi.com - extraída do screenshot real)
+            falconi: {
+              olive: '#7A7423',        // Cor de destaque institucional da Falconi (rgb: 122, 116, 35)
+              oliveHover: '#67621D',   // Hover escurecido do botão "Conheça"
+              oliveLight: '#F4F3EA',   // Fundo pastel suave para badges
+              oliveBorder: '#D8D5B8',  // Borda suave institucional
+              black: '#000000',        // Preto sólido do header Falconi
+              dark: '#111111',         // Barra superior executiva
+              gray: '#ECEAE4',         // Cinza/bege suave do banner lateral
+              light: '#F8F9FA',
+            },
+            brand: {
+              50: '#fbfbf7',
+              100: '#f4f3ea',
+              200: '#e7e5d1',
+              400: '#9b9648',
+              500: '#7a7423',
+              600: '#67621d',
+              700: '#545017',
+              800: '#413e11',
+              900: '#000000',
+            }
+          },
+          boxShadow: {
+            'falconi': '0 10px 25px -4px rgba(122, 116, 35, 0.25)',
+            'card': '0 4px 20px -2px rgba(0, 0, 0, 0.04)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #ffffff;
+      color: #111827;
+      letter-spacing: -0.015em;
+    }
+    h1, h2, h3, h4, .font-heading {
+      letter-spacing: -0.025em;
+    }
+    [x-cloak] { display: none !important; }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    @media print {
+      header, footer, .no-print { display: none !important; }
+      body { background: white !important; color: black !important; }
+    }
+  </style>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-white text-slate-900 antialiased selection:bg-[#7A7423] selection:text-white flex flex-col min-h-screen"
+      x-data="globalApp()"
+      x-init="initApp()">
+
+  <!-- Notificação Flutuante (Toast) -->
+  <div x-cloak
+       x-show="toast.visible"
+       x-transition:enter="transition ease-out duration-300"
+       x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+       x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+       x-transition:leave="transition ease-in duration-200"
+       x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+       x-transition:leave-end="opacity-0 translate-y-4 scale-95"
+       class="fixed bottom-6 right-6 z-50 bg-black text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-[#7A7423] flex items-center gap-3 text-sm font-semibold">
+    <div class="w-7 h-7 rounded-lg bg-[#7A7423]/20 text-[#7A7423] flex items-center justify-center shrink-0">
+      <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+    </div>
+    <span x-text="toast.message"></span>
+  </div>
+
+  <!-- Barra Superior Executiva (Portugal) - Identidade Falconi -->
+  <div class="bg-[#111111] text-slate-300 text-[11px] py-2 px-4 sm:px-8 border-b border-neutral-800">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-4">
+        <span class="flex items-center gap-2 text-white font-semibold tracking-wide">
+          <span class="w-2 h-2 rounded-full bg-[#7A7423] animate-pulse"></span>
+          Novo Varejo • Consultoria Especializada & Inteligência de Gestão em Portugal
+        </span>
+        <span class="hidden md:inline text-neutral-700">•</span>
+        <div class="hidden lg:flex items-center gap-1.5">
+          <a href="{% url 'core:home' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if request.path == '/' %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            🏪 Supermercados
+          </a>
+          <a href="{% url 'core:alavancas' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/alavancas/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            🎯 Fórmula da Venda
+          </a>
+          <a href="{% url 'core:layout' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/layout/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            📐 Layout & Merch
+          </a>
+          <a href="{% url 'core:analista' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/analista/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            📊 Terminal Analista
+          </a>
+          <a href="{% url 'core:industria' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/industria/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            🏭 Indústria
+          </a>
+          <a href="{% url 'core:gestao' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/gestao/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            🤝 Área de Gestão
+          </a>
+          <a href="{% url 'core:automovel' %}" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider {% if '/automovel/' in request.path %}bg-[#7A7423] text-white shadow-xs{% else %}bg-neutral-900 border border-neutral-800 text-slate-400 hover:text-white{% endif %} transition-all">
+            🚗 Automóvel 360º
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center gap-5 text-slate-400">
+        <span class="flex items-center gap-1.5 hover:text-white transition-colors">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-[#7A7423]"></i>
+          <span>Gabinete Lisboa: <strong>+351 210 998 877</strong></span>
+        </span>
+        <span class="hidden sm:inline text-neutral-700">|</span>
+        <a href="mailto:gerencia@novovarejo.pt" class="hover:text-white transition-colors hidden sm:flex items-center gap-1">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-slate-500"></i>
+          <span>gerencia@novovarejo.pt</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cabeçalho Principal Oficial Falconi (Header Preto com Links Brancos e Destaque Oliva) -->
+  <header class="sticky top-0 z-40 bg-black text-white border-b border-neutral-900 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logótipo da Marca - Estilo Falconi Oficial -->
+      <a href="{% url 'core:home' %}" class="flex items-center gap-3.5 group">
+        <div>
+          <span class="text-2xl font-black tracking-tight text-white block leading-none">
+            Novo Varejo<span class="text-[#7A7423]">.</span>
+          </span>
+          <span class="text-[10px] uppercase font-bold tracking-widest text-neutral-400 block mt-1">
+            Regis Costa • Consultoria de Resultados
+          </span>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação SPA Falconi (Soluções ▾, Segmentos ▾, etc.) -->
+      <nav class="hidden xl:flex items-center gap-7 text-xs font-semibold text-white">
+        <a href="{% url 'core:home' %}#inicio" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1">
+          Início
+        </a>
+        <a href="{% url 'core:home' %}#solucoes" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1">
+          Soluções ▾
+        </a>
+        <a href="{% url 'core:home' %}#diagnostico-360" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1">
+          Segmentos ▾
+        </a>
+        <a href="{% url 'core:home' %}#painel-bi" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1.5 text-white font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#7A7423] animate-pulse"></span>
+          Painel de BI
+        </a>
+        <a href="{% url 'core:automovel' %}" class="py-1 px-3 rounded-full text-white hover:text-white bg-neutral-900 border border-neutral-800 hover:border-[#7A7423] transition-all flex items-center gap-1.5 font-bold">
+          <i data-lucide="car" class="w-3.5 h-3.5 text-[#7A7423]"></i>
+          Automóvel 360º
+        </a>
+        <a href="{% url 'core:home' %}#casos-sucesso" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1">
+          Conteúdo ▾
+        </a>
+        <a href="{% url 'core:home' %}#contabilistas" class="hover:text-[#7A7423] transition-colors py-1 flex items-center gap-1">
+          Sobre ▾
+        </a>
+      </nav>
+
+      <!-- Botões de Ação e Acessórios Falconi (Lupa, Telefone, Botão Oliva Conheça) -->
+      <div class="flex items-center gap-4">
+        <!-- Ícone de Busca Falconi -->
+        <a href="{% url 'core:home' %}#calculadora" title="Pesquisar" class="text-white hover:text-[#7A7423] transition-colors p-2">
+          <i data-lucide="search" class="w-4 h-4"></i>
+        </a>
+        <!-- Ícone de Telefone Falconi -->
+        <button @click="modalLead = true" title="Fale com um consultor" class="text-white hover:text-[#7A7423] transition-colors p-2">
+          <i data-lucide="phone-call" class="w-4 h-4"></i>
+        </button>
+        <!-- Seletor de Idioma PT -->
+        <span class="hidden sm:inline-flex items-center gap-1 text-xs font-bold text-white pr-2 border-r border-neutral-800">
+          PT <span class="text-[#7A7423] text-[10px]">▾</span>
+        </span>
+        <!-- Botão CTA Oficial Falconi no tom #7A7423 -->
+        <button @click="modalSimulacao = true"
+                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#7A7423] hover:bg-[#67621D] text-white text-xs font-bold transition-all shadow-sm active:scale-95 cursor-pointer">
+          <span>Conheça</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Conteúdo Principal -->
+  <main class="flex-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Rodapé Institucional (PT-PT) - Estilo Leve, Arejado e Moderno -->
+  <footer class="bg-slate-50 text-slate-600 pt-16 pb-12 text-xs border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-200">
+        <!-- Coluna 1: Sobre a Marca -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-bold shadow-xs">
+              <i data-lucide="bar-chart-3" class="w-5 h-5 text-[#84CC16]"></i>
+            </div>
+            <div>
+              <span class="text-base font-extrabold text-slate-900 block leading-tight">novo<span class="text-slate-900">varejo</span><span class="inline-block w-2 h-2 rounded-full bg-[#84CC16] ml-1"></span></span>
+              <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Regis Costa Consultoria</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Consultoria empresarial de elite especializada na recuperação de margem, auditoria de frescos e inteligência de dados (SAF-T) para supermercados e retalho de proximidade em Portugal.
+          </p>
+          <div class="text-[11px] text-slate-500 space-y-1 pt-1">
+            <p><strong>Gabinete Lisboa:</strong> Av. da Liberdade n.º 245, 4.º Andar</p>
+            <p><strong>Delegação Porto:</strong> Av. da Boavista n.º 1200</p>
+            <p><strong>NIPC:</strong> 514 892 310 (Sociedade por Quotas)</p>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Soluções e Módulos -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Soluções Especializadas</h4>
+          <ul class="space-y-2 text-xs text-slate-500">
+            <li><a href="{% url 'core:home' %}#diagnostico-360" class="hover:text-slate-900 transition-colors">Diagnóstico Raio-X 360º (15 Dias)</a></li>
+            <li><a href="{% url 'core:home' %}#painel-bi" class="hover:text-slate-900 transition-colors">Plataforma Retail Intelligence 360º</a></li>
+            <li><a href="{% url 'core:verificacao' %}" class="hover:text-slate-900 transition-colors">Auditoria de Cais e Talho (Checklists)</a></li>
+            <li><a href="{% url 'core:relatorios_lista' %}" class="hover:text-slate-900 transition-colors">Autos de Abate de Quebras (Art.º 86.º CIVA)</a></li>
+            <li><a href="{% url 'core:documentos' %}" class="hover:text-slate-900 transition-colors">Fichas Técnicas de Desmanche de Carnes</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Conformidade Tributária Portugal -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Normas Fiscais & Legais (PT)</h4>
+          <ul class="space-y-2 text-xs text-slate-500">
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> Ficheiro SAF-T (PT) Portaria n.º 302/2016</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> Art.º 86.º n.º 1 Código do IVA (Quebras)</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> Art.º 23.º n.º 1 Código do IRC (CMVC)</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> Higiene e Segurança ASAE / DGAV</li>
+            <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-600"></i> Articulação com a Ordem dos CC (OCC)</li>
+          </ul>
+        </div>
+
+        <!-- Coluna 4: Contacto e Atendimento -->
+        <div class="space-y-3">
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Contacto Direto</h4>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Fale diretamente com o consultor sénior para analisar confidencialmente as perdas da sua loja:
+          </p>
+          <button @click="modalLead = true"
+                  class="w-full py-2.5 rounded-full bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
+            <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#84CC16]"></i>
+            <span>Pedir Contacto Telefónico</span>
+          </button>
+          <div class="pt-2">
+            <p class="text-[11px] text-slate-400">Horário de Atendimento Executivo:</p>
+            <p class="text-xs text-slate-700 font-semibold">Segunda a Sexta: 08h30 às 19h00</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assinatura e Direitos -->
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
+        <div>
+          © 2026 Novo Varejo Inteligência de Mercado • Regis Costa. Todos os direitos reservados.
+        </div>
+        <div class="flex items-center gap-5 text-slate-500">
+          <span>Acordo de Confidencialidade (NDA)</span>
+          <span>•</span>
+          <span>Privacidade & RGPD</span>
+          <span>•</span>
+          <a href="/admin/" class="text-slate-700 hover:underline">Área de Gestão Django</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       MODAL 1: SIMULAR RECUPERAÇÃO DE MARGEM (CTA)
+  ========================================== -->
+  <div x-cloak x-show="modalSimulacao"
+       class="fixed inset-0 z-50 bg-[#07050B]/80 backdrop-blur-xs flex items-center justify-center p-4">
+    <div @click.away="modalSimulacao = false"
+         class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-xl w-full p-6 sm:p-8 relative max-h-[92vh] overflow-y-auto">
+      <button @click="modalSimulacao = false"
+              class="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-2xl bg-[#ACE833]/20 text-[#07050B] flex items-center justify-center font-bold">
+          <i data-lucide="trending-up" class="w-5 h-5 text-[#7A7423]"></i>
+        </div>
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#07050B] bg-[#ACE833]/20 px-2 py-0.5 rounded-full">
+            Simulador de Liquidez Imediata
+          </span>
+          <h3 class="text-lg font-bold text-slate-900 mt-0.5">Simulação de Recuperação de Margem</h3>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-600 mb-5">
+        Selecione o volume de faturação da sua loja em Portugal para ver a projeção média de dinheiro vivo a recuperar por mês:
+      </p>
+
+      <div class="space-y-4">
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+          <div class="flex justify-between text-xs font-bold mb-2">
+            <span class="text-slate-600">Faturação Mensal Líquida:</span>
+            <span class="text-[#07050B] font-extrabold text-sm" x-text="formatEuro(simulacaoValor) + '/mês'"></span>
+          </div>
+          <input type="range" min="60000" max="350000" step="10000" x-model.number="simulacaoValor"
+                 class="w-full accent-[#ACE833] cursor-pointer h-2 bg-slate-200 rounded-lg">
+          <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+            <span>60.000 €</span>
+            <span>150.000 €</span>
+            <span>350.000 €+</span>
+          </div>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 grid grid-cols-2 gap-4 text-center">
+          <div>
+            <span class="text-[10px] text-slate-600 font-bold uppercase block">Fuga Mapeada / Mês</span>
+            <span class="text-xl font-black text-rose-600 mt-1 block" x-text="'-' + formatEuro(simulacaoValor * 0.05)"></span>
+            <span class="text-[10px] text-slate-500">Perdido no cais e no talho</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-600 font-bold uppercase block">Recuperação em 90d</span>
+            <span class="text-xl font-black text-[#07050B] mt-1 block" x-text="'+' + formatEuro(simulacaoValor * 0.05 * 0.65 * 3)"></span>
+            <span class="text-[10px] text-slate-500">Caixa líquido reintegrado</span>
+          </div>
+        </div>
+
+        <button @click="modalSimulacao = false; modalLead = true"
+                class="w-full py-3.5 rounded-xl bg-[#ACE833] hover:bg-[#98D622] text-[#07050B] font-extrabold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer flex items-center justify-center gap-2">
+          <span>Agendar Raio-X para Recuperar Este Valor</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL 2: AGENDAR DIAGNÓSTICO RAIO-X 360º
+  ========================================== -->
+  <div x-cloak x-show="modalLead"
+       class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs flex items-center justify-center p-4">
+    <div @click.away="modalLead = false"
+         class="bg-white rounded-3xl border border-slate-200 shadow-2xl max-w-lg w-full p-6 sm:p-8 relative max-h-[92vh] overflow-y-auto">
+      <button @click="modalLead = false"
+              class="absolute top-5 right-5 p-2 rounded-xl bg-slate-100 text-slate-400 hover:text-slate-700 cursor-pointer">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <template x-if="leadEnviado">
+        <div class="py-8 text-center space-y-3">
+          <div class="w-14 h-14 bg-[#ACE833]/20 text-[#07050B] rounded-full flex items-center justify-center mx-auto">
+            <i data-lucide="check-circle-2" class="w-8 h-8 text-[#7A7423]"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900">Pedido Registado com Sucesso!</h3>
+          <p class="text-xs text-slate-600 max-w-xs mx-auto">
+            O consultor sénior Regis Costa entrará em contacto nas próximas 2 horas úteis para coordenar a análise confidencial do ficheiro SAF-T da sua loja.
+          </p>
+        </div>
+      </template>
+
+      <template x-if="!leadEnviado">
+        <div>
+          <div class="mb-5">
+            <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#07050B] bg-[#ACE833]/20 px-2.5 py-0.5 rounded-full border border-[#ACE833]/40">
+              Garantia de 100% de Abatimento na Avença
+            </span>
+            <h3 class="text-xl font-bold text-slate-900 mt-1">
+              Agendar Diagnóstico Raio-X 360º
+            </h3>
+            <p class="text-xs text-slate-500 mt-1">
+              Intervenção de 15 dias sem paragens na loja. Mapeamento exato das perdas.
+            </p>
+          </div>
+
+          <form @submit.prevent="enviarLead()" class="space-y-3">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Nome do Sócio-Gerente</label>
+                <input type="text" required x-model="leadForm.nome" placeholder="ex.: Manuel Ferreira"
+                       class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#ACE833]">
+              </div>
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Supermercado / Loja</label>
+                <input type="text" required x-model="leadForm.empresa" placeholder="ex.: Supermercado da Vila Lda."
+                       class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#ACE833]">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Telemóvel / WhatsApp</label>
+                <input type="tel" required x-model="leadForm.telemovel" placeholder="ex.: 912 345 678"
+                       class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
+              </div>
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Correio Eletrónico</label>
+                <input type="email" required x-model="leadForm.email" placeholder="ex.: gerencia@supermercado.pt"
+                       class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Concelho / Região</label>
+                <select x-model="leadForm.distrito"
+                        class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
+                  <option>Lisboa / Grande Lisboa</option>
+                  <option>Porto / Grande Porto</option>
+                  <option>Braga e Minho</option>
+                  <option>Coimbra / Leiria</option>
+                  <option>Setúbal / Margem Sul</option>
+                  <option>Algarve (Faro / Portimão)</option>
+                  <option>Alentejo (Évora / Beja)</option>
+                  <option>Ilhas (Madeira / Açores)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Software POS da Caixa</label>
+                <select x-model="leadForm.software_pos"
+                        class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
+                  <option>ETPOS (Sysdev / Marques)</option>
+                  <option>WinRest / Colibri</option>
+                  <option>Primavera BSS / Cegid</option>
+                  <option>XD Software Retalho</option>
+                  <option>SAGE 50c</option>
+                  <option>Zonesoft / Ponto25</option>
+                  <option>Outro Sistema POS</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="text-[11px] font-bold text-slate-700 block mb-1">Observações Operacionais (Opcional)</label>
+              <textarea rows="2" x-model="leadForm.mensagem" placeholder="ex.: Temos dúvidas nas quebras do talho e suspeitamos de custo de reposição nos azeites."
+                        class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2 text-slate-900 focus:outline-none focus:border-[#7A7423]"></textarea>
+            </div>
+
+            <button type="submit"
+                    class="w-full py-3.5 rounded-full bg-[#7A7423] hover:bg-[#67621D] text-white font-extrabold text-xs uppercase tracking-wider transition-all shadow-md cursor-pointer mt-1">
+              Submeter Pedido de Diagnóstico Raio-X
+            </button>
+
+            <p class="text-[10px] text-slate-400 text-center">
+              Acordo de Confidencialidade (NDA) garantido. Dados protegidos pelo RGPD.
+            </p>
+          </form>
+        </div>
+      </template>
+    </div>
+  </div>
+
+  <!-- Cookie Banner Oficial Falconi (como no print falconi.com) -->
+  <div x-cloak x-show="cookieBanner"
+       class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-neutral-300 py-3.5 px-4 sm:px-8 shadow-2xl">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-neutral-700">
+      <p class="leading-relaxed text-center md:text-left">
+        Nós coletamos cookies para oferecer um serviço personalizado. Utilize as opções abaixo para configurar suas preferências quanto à coleta de cookies.
+      </p>
+      <div class="flex items-center gap-3 shrink-0">
+        <button @click="aceitarCookies('rejeitar')"
+                class="px-5 py-2 rounded-xl bg-[#7A7423] hover:bg-[#67621D] text-white font-bold transition-all cursor-pointer">
+          Rejeitar
+        </button>
+        <button @click="aceitarCookies('aceitar')"
+                class="px-5 py-2 rounded-xl bg-[#7A7423] hover:bg-[#67621D] text-white font-bold transition-all cursor-pointer">
+          Aceitar
+        </button>
+        <button @click="aceitarCookies('preferencias')"
+                class="text-neutral-700 hover:text-black underline font-medium ml-2 cursor-pointer">
+          Preferências
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getCsrfToken() {
+      const input = document.querySelector('[name=csrfmiddlewaretoken]');
+      return input ? input.value : '';
+    }
+
+    function globalApp() {
+      return {
+        modalLead: false,
+        modalSimulacao: false,
+        cookieBanner: !localStorage.getItem('falconi_cookie_consent'),
+        simulacaoValor: 120000,
+        leadEnviado: false,
+        aceitarCookies(tipo) {
+          localStorage.setItem('falconi_cookie_consent', tipo);
+          this.cookieBanner = false;
+        },
+        leadForm: {
+          nome: '',
+          empresa: '',
+          nif: '',
+          email: '',
+          telemovel: '',
+          distrito: 'Lisboa / Grande Lisboa',
+          lojas: '1 a 3 lojas',
+          faturacao: '120.000 € / mês',
+          software_pos: 'ETPOS (Sysdev / Marques)',
+          mensagem: ''
+        },
+        toast: {
+          visible: false,
+          message: ''
+        },
+        showToast(msg) {
+          this.toast.message = msg;
+          this.toast.visible = true;
+          this.$nextTick(() => { if (window.lucide) window.lucide.createIcons(); });
+          setTimeout(() => { this.toast.visible = false; }, 3800);
+        },
+        formatEuro(val) {
+          return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val);
+        },
+        async enviarLead() {
+          try {
+            const resp = await fetch('/api/solicitar-diagnostico/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCsrfToken()
+              },
+              body: JSON.stringify(this.leadForm)
+            });
+            const data = await resp.json();
+            if (data.success) {
+              this.leadEnviado = true;
+              this.showToast('Pedido de Diagnóstico submetido com sucesso!');
+              setTimeout(() => {
+                this.modalLead = false;
+                this.leadEnviado = false;
+                this.leadForm = { nome: '', empresa: '', nif: '', email: '', telemovel: '', distrito: 'Lisboa / Grande Lisboa', lojas: '1 a 3 lojas', faturacao: '120.000 € / mês', software_pos: 'ETPOS', mensagem: '' };
+              }, 3000);
+            } else {
+              alert('Erro: ' + data.error);
+            }
+          } catch (e) {
+            alert('Falha na comunicação com o servidor.');
+          }
+        },
+        initApp() {
+          this.$nextTick(() => {
+            if (window.lucide) {
+              window.lucide.createIcons();
+            }
+          });
+        }
+      }
+    }
+  </script>
+</body>
+</html>

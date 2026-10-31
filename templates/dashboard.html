@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Retail Intelligence 360º | Plataforma de BI de Retalho • Vértice Portugal{% endblock %}
+
+{% block content %}
+<div class="bg-slate-100/70 py-8 lg:py-12 border-b border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Cabeçalho de Contexto Executivo -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+      <div>
+        <div class="flex items-center gap-2 text-xs text-slate-500 font-semibold mb-1">
+          <a href="{% url 'core:home' %}" class="hover:text-sky-600">Início</a>
+          <span>/</span>
+          <span class="text-sky-700">Retail Intelligence 360º</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          Painel de Controlo de Rentabilidade & Auditoria Operacional
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-3xl">
+          Visualização em tempo real das margens de reposição, quebras nos perecíveis e alertas de chão de loja auditados a partir do ficheiro SAF-T (PT) e sistema POS.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2.5 shrink-0">
+        <a href="{% url 'core:relatorios_lista' %}" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 shadow-2xs">
+          <i data-lucide="file-text" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>Ver Relatórios Formais</span>
+        </a>
+        <a href="{% url 'core:verificacao' %}" class="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm shadow-sky-600/20">
+          <i data-lucide="check-square" class="w-3.5 h-3.5"></i>
+          <span>Checklists de Loja</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- COMPONENTE BI INCORPORADO DIRETAMENTE -->
+    {% include 'components/dashboard_bi.html' %}
+  </div>
+</div>
+{% endblock %}

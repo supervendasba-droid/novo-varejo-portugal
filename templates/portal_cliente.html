@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Portal do Cliente Seguro | {{ supermercado.nome }}{% endblock %}
+
+{% block content %}
+<div class="text-slate-800">
+
+  <!-- CABEÇALHO DO PORTAL DO CLIENTE -->
+  <section class="bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 text-white py-10 px-4 sm:px-8 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold border border-emerald-500/30 mb-2">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Portal do Cliente • Compartilhamento Seguro por Design</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-black text-white">
+          {{ supermercado.nome }}
+        </h1>
+        <p class="text-xs text-slate-300 mt-0.5">
+          Bem-vindo, <strong>{{ token_obj.destinatario_nome }}</strong> • Acesso simplificado e seguro aos resultados da sua loja
+        </p>
+      </div>
+
+      <div class="bg-slate-800/90 border border-slate-700 p-4 rounded-2xl text-xs space-y-1 text-slate-300">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Sessão Criptografada via Token Seguro</span>
+        </div>
+        <div class="text-[11px] text-slate-400 font-mono">Token: {{ token_obj.token }}</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AS 4 CAPACIDADES DO CLIENTE (Slide 42 do PDF) -->
+  <section class="py-10 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-emerald-700 font-bold text-xs uppercase block">1. Visualização</span>
+          <span class="text-sm font-bold text-slate-900 block mt-1">Dashboards da Loja</span>
+          <span class="text-xs text-slate-500 block mt-1">Métricas claras sem necessidade de interpretar relatórios complexos.</span>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-sky-700 font-bold text-xs uppercase block">2. Apresentação</span>
+          <span class="text-sm font-bold text-slate-900 block mt-1">Diagnóstico Executivo</span>
+          <span class="text-xs text-slate-500 block mt-1">Fato, hipótese e causas fundamentadas pelo consultor.</span>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-amber-700 font-bold text-xs uppercase block">3. Execução</span>
+          <span class="text-sm font-bold text-slate-900 block mt-1">Plano de Ação em Loja</span>
+          <span class="text-xs text-slate-500 block mt-1">Tarefas práticas com responsável e prazo para a equipa cumprir.</span>
+        </div>
+
+        <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs">
+          <span class="text-purple-700 font-bold text-xs uppercase block">4. Lançamento</span>
+          <span class="text-sm font-bold text-slate-900 block mt-1">Registo Operacional</span>
+          <span class="text-xs text-slate-500 block mt-1">Inserção direta de dados diários de fecho sem fricção.</span>
+        </div>
+      </div>
+
+      <!-- Planos de Ação que o Cliente Deve Acompanhar -->
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Ações Operacionais da sua Loja em Execução</h3>
+            <p class="text-xs text-slate-500">Definidas em conjunto com o consultor Regis Costa:</p>
+          </div>
+          <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+            {{ planos.count }} Tarefas em Curso
+          </span>
+        </div>
+
+        <div class="space-y-3">
+          {% for p in planos %}
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold {% if p.prioridade == 'P1' %}bg-rose-100 text-rose-800{% else %}bg-amber-100 text-amber-800{% endif %}">
+                  {{ p.prioridade }}
+                </span>
+                <span class="text-xs font-bold text-slate-900">{{ p.problema }}</span>
+              </div>
+              <p class="text-xs text-slate-600 mt-1 font-medium">{{ p.acao }}</p>
+              <div class="mt-2 text-[11px] text-slate-400">
+                <strong>Responsável:</strong> {{ p.responsavel }} • <strong>Prazo:</strong> {{ p.prazo_dias }} dias
+              </div>
+            </div>
+
+            <div class="text-right shrink-0">
+              <span class="text-xs font-bold text-emerald-700 block">{{ p.resultado_esperado }}</span>
+              <span class="inline-block mt-1 text-xs font-extrabold px-3 py-1 rounded-lg {% if p.status == 'concluido' %}bg-emerald-600 text-white{% else %}bg-amber-100 text-amber-800{% endif %}">
+                {{ p.get_status_display }}
+              </span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+{% endblock %}

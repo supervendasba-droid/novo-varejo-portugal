@@ -1,0 +1,272 @@
+{% extends 'base.html' %}
+
+{% block title %}As Alavancas da Venda • A Fórmula do Resultado | Novo Varejo Portugal{% endblock %}
+
+{% block content %}
+<div x-data="alavancasApp()" class="text-slate-800">
+
+  <!-- ==========================================
+       HERO EXECUTIVO - ALAVANCAS DA VENDA
+  ========================================== -->
+  <section class="relative overflow-hidden pt-12 pb-16 lg:pt-16 lg:pb-24 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white border-b border-slate-800">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto">
+        <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/90 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Metodologia Novo Varejo • Diagnóstico pelas Alavancas do Resultado</span>
+        </span>
+
+        <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+          A Fórmula da Venda
+        </h1>
+
+        <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
+          Quando a faturação cai, a pergunta correta não é apenas <em>"quanto caiu?"</em>. <br>
+          A pergunta que gera ação imediata é: <strong>"Qual alavanca caiu e por quê?"</strong>
+        </p>
+
+        <!-- A Grande Decomposição em Cards -->
+        <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+          <div class="bg-slate-900/90 border border-slate-700/80 p-5 rounded-2xl shadow-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nível 1 • Decomposição Primária</span>
+            <div class="text-xl sm:text-2xl font-black text-white mt-1">
+              VENDA = <span class="text-emerald-400">Clientes (Fluxo)</span> × <span class="text-sky-400">Ticket Médio</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">
+              Se a venda caiu, ou entraram menos pessoas na loja, ou cada cliente gastou menos por visita.
+            </p>
+          </div>
+
+          <div class="bg-slate-900/90 border border-slate-700/80 p-5 rounded-2xl shadow-xl">
+            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nível 2 • Decomposição Operacional</span>
+            <div class="text-xl sm:text-2xl font-black text-white mt-1">
+              TICKET = <span class="text-amber-400">Itens / Talão</span> × <span class="text-purple-400">Valor Médio</span>
+            </div>
+            <p class="text-xs text-slate-400 mt-2">
+              Se o ticket caiu, ou o cliente levou menos produtos no cesto, ou comprou itens mais baratos.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       SIMULADOR INTERATIVO DAS 3 ALAVANCAS
+  ========================================== -->
+  <section class="py-12 lg:py-16 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-100 gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              Caso Real • Supermercado da Vila Lda. (Março 2026)
+            </span>
+            <h3 class="text-xl font-bold text-slate-900 mt-2">Simulador Dinâmico da Fórmula da Venda</h3>
+            <p class="text-xs text-slate-500">Mova os cursores para entender o impacto direto no caixa ao mexer em cada alavanca:</p>
+          </div>
+
+          <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl text-right shrink-0">
+            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Faturação Resultante</span>
+            <span class="text-2xl font-black text-emerald-600" x-text="formatEuro(vendaCalculada)"></span>
+            <span class="text-[11px] text-slate-500 block" x-text="`Diferença: ${formatEuro(vendaCalculada - 120000)} face à base`"></span>
+          </div>
+        </div>
+
+        <!-- 3 Controles de Alavancas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <!-- Alavanca 1: Fluxo -->
+          <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-emerald-800">1. Alavanca Clientes (Fluxo)</span>
+              <span class="text-sm font-black text-emerald-700" x-text="`${simClientes} talões`"></span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Quantos clientes passam pelas caixas no mês:</p>
+            <input type="range" min="6000" max="11000" step="50" x-model.number="simClientes"
+                   class="w-full accent-emerald-600 mt-4 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>6.000 clientes</span>
+              <span>Base: 8.450 (-8%)</span>
+              <span>11.000</span>
+            </div>
+            <div class="mt-4 pt-3 border-t border-emerald-200/80 text-[11px] text-emerald-900 font-medium">
+              <strong>Como alavancar:</strong> Fornadas quentes na padaria às 17h, campanhas de folheto local e presença digital.
+            </div>
+          </div>
+
+          <!-- Alavanca 2: Itens por Talão -->
+          <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-amber-800">2. Itens por Cesto (Cupom)</span>
+              <span class="text-sm font-black text-amber-700" x-text="`${simItens.toFixed(1)} artigos`"></span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Quantidade média de produtos no carrinho:</p>
+            <input type="range" min="4.0" max="10.0" step="0.1" x-model.number="simItens"
+                   class="w-full accent-amber-500 mt-4 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>4.0 artigos</span>
+              <span>Base: 6.8 un.</span>
+              <span>10.0</span>
+            </div>
+            <div class="mt-4 pt-3 border-t border-amber-200/80 text-[11px] text-amber-900 font-medium">
+              <strong>Como alavancar:</strong> Exposição cruzada (massa ao lado do molho), topos de gôndola e checkout de impulso.
+            </div>
+          </div>
+
+          <!-- Alavanca 3: Valor Médio do Artigo -->
+          <div class="p-5 rounded-2xl bg-purple-50/50 border border-purple-200/80">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase text-purple-800">3. Valor Médio do Item</span>
+              <span class="text-sm font-black text-purple-700" x-text="`${simValorItem.toFixed(2)} € / un.`"></span>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">Patamar de preço médio dos artigos vendidos:</p>
+            <input type="range" min="1.50" max="3.50" step="0.05" x-model.number="simValorItem"
+                   class="w-full accent-purple-600 mt-4 cursor-pointer">
+            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
+              <span>1.50 €</span>
+              <span>Base: 2.08 €</span>
+              <span>3.50 €</span>
+            </div>
+            <div class="mt-4 pt-3 border-t border-purple-200/80 text-[11px] text-purple-900 font-medium">
+              <strong>Como alavancar:</strong> Introduzir vinhos reserva, azeites premium e carnes maturadas com maior valor percebido.
+            </div>
+          </div>
+        </div>
+
+        <!-- Ticket Médio Calculado -->
+        <div class="mt-6 p-4 rounded-2xl bg-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold">
+              <i data-lucide="calculator" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <span class="font-bold text-slate-900">Ticket Médio Resultante:</span>
+              <span class="text-slate-600 ml-1" x-text="`${formatEuroCents(simTicketMedio)} por compra`"></span>
+            </div>
+          </div>
+          <button @click="simClientes = 8450; simItens = 6.8; simValorItem = 2.08"
+                  class="text-xs font-bold text-slate-500 hover:text-slate-800 underline cursor-pointer">
+            Repor Valores Auditados
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       DO DIAGNÓSTICO À EXECUÇÃO: PLANOS DE AÇÃO
+  ========================================== -->
+  <section class="py-12 lg:py-16 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mb-8">
+        <span class="text-xs font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
+          Execução no Chão de Loja
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
+          O Diagnóstico Não Fica Preso em Relatórios
+        </h2>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1">
+          A metodologia Novo Varejo transforma cada problema detectado numa tarefa concreta com <strong>Prioridade, Responsável, Prazo e Resultado Mensurado</strong>:
+        </p>
+      </div>
+
+      <!-- Tabela de Planos de Ação Operacionais -->
+      <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs text-slate-600">
+            <thead class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase border-b border-slate-200">
+              <tr>
+                <th class="py-3 px-4">Prioridade</th>
+                <th class="py-3 px-4">Problema & Diagnóstico</th>
+                <th class="py-3 px-4">Ação Operacional Concreta</th>
+                <th class="py-3 px-3">Responsável</th>
+                <th class="py-3 px-3 text-center">Prazo</th>
+                <th class="py-3 px-4">Resultado Esperado / Medido</th>
+                <th class="py-3 px-4 text-center">Estado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {% for p in planos %}
+              <tr class="hover:bg-slate-50 transition-colors">
+                <td class="py-3.5 px-4 font-bold">
+                  <span class="px-2 py-0.5 rounded-full text-[10px] {% if p.prioridade == 'P1' %}bg-rose-100 text-rose-800 border border-rose-200{% else %}bg-amber-100 text-amber-800{% endif %}">
+                    {{ p.prioridade }}
+                  </span>
+                </td>
+                <td class="py-3.5 px-4">
+                  <div class="font-bold text-slate-900">{{ p.problema }}</div>
+                  <div class="text-[11px] text-slate-400">{{ p.acompanhamento }}</div>
+                </td>
+                <td class="py-3.5 px-4 text-slate-700 font-medium max-w-xs">{{ p.acao }}</td>
+                <td class="py-3.5 px-3 font-semibold text-slate-800">{{ p.responsavel }}</td>
+                <td class="py-3.5 px-3 text-center font-bold text-slate-700">{{ p.prazo_dias }} dias</td>
+                <td class="py-3.5 px-4">
+                  <div class="text-emerald-700 font-bold">{{ p.resultado_esperado }}</div>
+                  {% if p.resultado_medido %}
+                  <div class="text-[10px] text-slate-400 font-mono">{{ p.resultado_medido }}</div>
+                  {% endif %}
+                </td>
+                <td class="py-3.5 px-4 text-center">
+                  <button @click="togglePlano({{ p.id }})"
+                          class="px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider transition-all cursor-pointer shadow-2xs"
+                          :class="planoStatus[{{ p.id }}] === 'concluido' ? 'bg-emerald-600 text-white' : 'bg-amber-100 text-amber-800 border border-amber-300'">
+                    <span x-text="planoStatus[{{ p.id }}] === 'concluido' ? 'Concluído ✓' : 'Em Execução'"></span>
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function alavancasApp() {
+    return {
+      simClientes: 8450,
+      simItens: 6.80,
+      simValorItem: 2.08,
+      planoStatus: {
+        {% for p in planos %}
+        {{ p.id }}: '{{ p.status }}',
+        {% endfor %}
+      },
+
+      get simTicketMedio() {
+        return this.simItens * this.simValorItem;
+      },
+      get vendaCalculada() {
+        return Math.round(this.simClientes * this.simTicketMedio);
+      },
+
+      formatEuro(val) {
+        return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val);
+      },
+      formatEuroCents(val) {
+        return new Intl.NumberFormat('pt-PT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(val);
+      },
+
+      async togglePlano(id) {
+        try {
+          const resp = await fetch(`/api/toggle-plano-acao/${id}/`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          });
+          const data = await resp.json();
+          if (data.success) {
+            this.planoStatus[id] = data.novo_status;
+            this.showToast(data.mensagem);
+          }
+        } catch (e) {
+          this.planoStatus[id] = this.planoStatus[id] === 'concluido' ? 'em_execucao' : 'concluido';
+          this.showToast('Estado do plano atualizado com sucesso!');
+        }
+      }
+    };
+  }
+</script>
+{% endblock %}

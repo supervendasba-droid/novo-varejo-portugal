@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}Áreas de Verificação & Checklists Operacionais | Vértice Retalho Portugal{% endblock %}
+
+{% block content %}
+<div class="bg-slate-50 py-10 lg:py-16" x-data="checklistsApp()">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Cabeçalho -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-slate-200">
+      <div>
+        <div class="flex items-center gap-2 text-xs text-slate-500 font-semibold mb-1">
+          <a href="{% url 'core:home' %}" class="hover:text-sky-600">Início</a>
+          <span>/</span>
+          <span class="text-sky-700">Chão de Loja</span>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+          Áreas de Verificação & Auditoria Operacional Diária
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
+          Controlo rigoroso dos 4 pontos nevrálgicos de fuga de margem: Cais de receção, balcão de talho, frutas e legumes (FLV) e linha de caixas (POS).
+        </p>
+      </div>
+
+      <!-- Barra de Conformidade Global -->
+      <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-4">
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Conformidade Global</span>
+          <div class="text-2xl font-black text-emerald-600" x-text="taxaConformidade + '%'"></div>
+        </div>
+        <div class="w-12 h-12 rounded-full border-4 border-emerald-500 flex items-center justify-center font-bold text-xs text-emerald-700">
+          <i data-lucide="shield-check" class="w-5 h-5"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegação pelas 4 Áreas de Loja -->
+    <div class="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {% for area in areas %}
+      <button @click="areaAtiva = {{ area.id }}"
+              :class="areaAtiva === {{ area.id }} ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25 ring-2 ring-sky-500' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'"
+              class="p-4 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between">
+        <div>
+          <span class="text-[10px] font-bold uppercase opacity-80 block">Secção {{ forloop.counter }}</span>
+          <h3 class="text-sm font-bold mt-1 leading-tight">{{ area.nome }}</h3>
+        </div>
+        <div class="mt-3 text-[11px] font-semibold opacity-90 flex items-center justify-between">
+          <span>{{ area.itens.count }} controlos</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </div>
+      </button>
+      {% endfor %}
+    </div>
+
+    <!-- Lista de Pontos de Controlo da Área Ativa -->
+    <div class="mt-8 space-y-4">
+      {% for area in areas %}
+      <div x-show="areaAtiva === {{ area.id }}" class="space-y-4">
+        <!-- Banner da Área -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold uppercase text-sky-700">{{ area.responsavel_padrao }}</span>
+            <h2 class="text-lg font-bold text-slate-900 mt-0.5">{{ area.nome }}</h2>
+            <p class="text-xs text-slate-500 mt-1">{{ area.descricao }}</p>
+          </div>
+          <span class="text-xs font-bold bg-slate-100 text-slate-700 px-3 py-1 rounded-full shrink-0">
+            Frequência: Diária & Contínua
+          </span>
+        </div>
+
+        <!-- Tabela de Checklists -->
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-2xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs sm:text-sm">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 font-bold uppercase text-[10px] text-slate-500">
+                  <th class="py-3 px-4">Ponto de Controlo Técnico</th>
+                  <th class="py-3 px-4 hidden md:table-cell">Procedimento Operacional Padrão (POP)</th>
+                  <th class="py-3 px-4">Risco Financeiro se Falhar</th>
+                  <th class="py-3 px-4 text-center">Estado Atual</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                {% for item in area.itens.all %}
+                <tr class="hover:bg-slate-50/70 transition-colors">
+                  <td class="py-3.5 px-4 font-bold text-slate-900">
+                    {{ item.ponto_verificacao }}
+                    <span class="block text-[10px] text-slate-400 font-normal md:hidden mt-1">{{ item.procedimento_padrao }}</span>
+                  </td>
+                  <td class="py-3.5 px-4 text-slate-600 hidden md:table-cell text-xs leading-relaxed">
+                    {{ item.procedimento_padrao }}
+                  </td>
+                  <td class="py-3.5 px-4 font-medium text-rose-700 text-xs">
+                    {{ item.risco_financeiro }}
+                  </td>
+                  <td class="py-3.5 px-4 text-center shrink-0">
+                    <div class="inline-flex rounded-xl p-1 bg-slate-100 border border-slate-200">
+                      <button @click="atualizarStatus({{ item.id }}, 'conforme')"
+                              :class="getStatus({{ item.id }}, '{{ item.status }}') === 'conforme' ? 'bg-emerald-600 text-white font-bold shadow-2xs' : 'text-slate-600 hover:text-slate-900'"
+                              class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer">
+                        Conforme
+                      </button>
+                      <button @click="atualizarStatus({{ item.id }}, 'em_correcao')"
+                              :class="getStatus({{ item.id }}, '{{ item.status }}') === 'em_correcao' ? 'bg-amber-500 text-white font-bold shadow-2xs' : 'text-slate-600 hover:text-slate-900'"
+                              class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer">
+                        Ajuste
+                      </button>
+                      <button @click="atualizarStatus({{ item.id }}, 'nao_conforme')"
+                              :class="getStatus({{ item.id }}, '{{ item.status }}') === 'nao_conforme' ? 'bg-rose-600 text-white font-bold shadow-2xs' : 'text-slate-600 hover:text-slate-900'"
+                              class="px-2.5 py-1 rounded-lg text-xs transition-all cursor-pointer">
+                        Falha
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function checklistsApp() {
+    return {
+      areaAtiva: {{ areas.first.id|default:1 }},
+      taxaConformidade: {{ taxa_conformidade|default:91.7 }},
+      itemStates: {},
+
+      getStatus(id, defaultVal) {
+        return this.itemStates[id] || defaultVal;
+      },
+
+      async atualizarStatus(id, novoStatus) {
+        this.itemStates[id] = novoStatus;
+        try {
+          const resp = await fetch(`/api/toggle-checklist-item/${id}/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCsrfToken()
+            },
+            body: JSON.stringify({ status: novoStatus })
+          });
+          const data = await resp.json();
+          if (data.success) {
+            this.taxaConformidade = data.taxa_conformidade;
+            this.showToast(data.mensagem);
+          }
+        } catch (e) {
+          this.showToast('Estado atualizado!');
+        }
+      }
+    };
+  }
+</script>
+{% endblock %}
