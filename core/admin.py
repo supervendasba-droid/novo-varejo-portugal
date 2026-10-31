@@ -1,7 +1,10 @@
 from django.contrib import admin
 from .models import (
     Supermercado, LeadDiagnostico, ArtigoCurvaA, RuturaFantasma, StockMorto,
-    ErroIvaSaft, AlertaMobile, RelatorioAuditoria, AreaVerificacao, ChecklistItem, DocumentoConsultoria
+    ErroIvaSaft, AlertaMobile, RelatorioAuditoria, AreaVerificacao, ChecklistItem, DocumentoConsultoria,
+    EmpresaAutomovel, ViaturaStand, OrdemOficina, SegmentoRentACar, AlertaAutomovel,
+    AlavancaVenda, PlanoAcaoOperacional, LayoutSupermercadoItem, RedeSetorialRanking,
+    PortalClienteToken, OportunidadeIndustria
 )
 
 @admin.register(Supermercado)
@@ -71,3 +74,57 @@ class DocumentoConsultoriaAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'titulo', 'categoria', 'formato', 'enquadramento_legal')
     list_filter = ('categoria', 'formato')
     search_fields = ('codigo', 'titulo', 'descricao')
+
+# Modelos do Módulo Automóvel 360º
+@admin.register(EmpresaAutomovel)
+class EmpresaAutomovelAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'nif', 'localizacao', 'segmento_principal', 'faturacao_mensal')
+    search_fields = ('nome', 'nif', 'localizacao')
+    list_filter = ('segmento_principal',)
+
+@admin.register(ViaturaStand)
+class ViaturaStandAdmin(admin.ModelAdmin):
+    list_display = ('matricula', 'modelo', 'tipo', 'dias_em_stock', 'custo_aquisicao', 'pvp_tabela', 'floor_plan_acumulado')
+    search_fields = ('matricula', 'modelo')
+    list_filter = ('tipo',)
+
+@admin.register(OrdemOficina)
+class OrdemOficinaAdmin(admin.ModelAdmin):
+    list_display = ('numero_or', 'viatura', 'tecnico', 'horas_faturadas', 'taxa_ocupacao_percentual', 'margem_pecas_percentual', 'status')
+    search_fields = ('numero_or', 'viatura', 'tecnico')
+    list_filter = ('status',)
+
+@admin.register(SegmentoRentACar)
+class SegmentoRentACarAdmin(admin.ModelAdmin):
+    list_display = ('categoria', 'tamanho_frota', 'taxa_ocupacao_media', 'tarifa_media_diaria', 'revpav_real')
+
+@admin.register(AlertaAutomovel)
+class AlertaAutomovelAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'pilar', 'severidade', 'lido', 'data_alerta')
+    list_filter = ('pilar', 'severidade', 'lido')
+
+# Modelos do Ecossistema Novo Varejo (Slide 87)
+@admin.register(AlavancaVenda)
+class AlavancaVendaAdmin(admin.ModelAdmin):
+    list_display = ('nome', 'valor_atual', 'meta_otimizada', 'unidade', 'impacto_previsto_euros')
+
+@admin.register(PlanoAcaoOperacional)
+class PlanoAcaoOperacionalAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'responsavel', 'prazo_dias', 'status', 'ganho_estimado_mensal')
+    list_filter = ('status',)
+
+@admin.register(LayoutSupermercadoItem)
+class LayoutSupermercadoItemAdmin(admin.ModelAdmin):
+    list_display = ('zona', 'tipo_circulacao', 'indice_frio_calor', 'impacto_venda_m2')
+
+@admin.register(RedeSetorialRanking)
+class RedeSetorialRankingAdmin(admin.ModelAdmin):
+    list_display = ('posicao', 'insignia', 'quota_mercado_pct', 'faturacao_estimada_milhoes')
+
+@admin.register(OportunidadeIndustria)
+class OportunidadeIndustriaAdmin(admin.ModelAdmin):
+    list_display = ('produto', 'rede_retalho', 'taxa_rutura_linear_pct', 'potencial_sellout_adicional_mes')
+
+@admin.register(PortalClienteToken)
+class PortalClienteTokenAdmin(admin.ModelAdmin):
+    list_display = ('supermercado', 'token', 'ativo', 'criado_em')
