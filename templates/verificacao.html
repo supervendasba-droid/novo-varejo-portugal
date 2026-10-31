@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Áreas de Verificação & Checklists Operacionais | Vértice Varejo Portugal{% endblock %}
+{% block title %}Áreas de Verificação & Checklists Operacionais | Vértice Retalho Portugal{% endblock %}
 
 {% block content %}
 <div class="bg-slate-50 py-10 lg:py-16" x-data="checklistsApp()">
@@ -17,7 +17,7 @@
           Áreas de Verificação & Auditoria Operacional Diária
         </h1>
         <p class="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl">
-          Controlo rigoroso dos 4 pontos nevrálgicos de fuga de margem: Cais de receção, balcão de açougue, frutas e legumes (FLV) e linha de caixas (POS).
+          Controlo rigoroso dos 4 pontos nevrálgicos de fuga de margem: Cais de receção, balcão de talho, frutas e legumes (FLV) e linha de caixas (POS).
         </p>
       </div>
 
@@ -40,7 +40,7 @@
               :class="areaAtiva === {{ area.id }} ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25 ring-2 ring-sky-500' : 'bg-white text-slate-700 border border-slate-200 hover:bg-slate-100'"
               class="p-4 rounded-2xl text-left transition-all cursor-pointer flex flex-col justify-between">
         <div>
-          <span class="text-[10px] font-bold uppercase opacity-80 block">Seção {{ forloop.counter }}</span>
+          <span class="text-[10px] font-bold uppercase opacity-80 block">Secção {{ forloop.counter }}</span>
           <h3 class="text-sm font-bold mt-1 leading-tight">{{ area.nome }}</h3>
         </div>
         <div class="mt-3 text-[11px] font-semibold opacity-90 flex items-center justify-between">

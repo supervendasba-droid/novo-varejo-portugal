@@ -21,7 +21,7 @@
         </h1>
 
         <p class="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed font-normal">
-          Quando a faturamento cai, a pergunta correta não é apenas <em>"quanto caiu?"</em>. <br>
+          Quando a faturação cai, a pergunta correta não é apenas <em>"quanto caiu?"</em>. <br>
           A pergunta que gera ação imediata é: <strong>"Qual alavanca caiu e por quê?"</strong>
         </p>
 
@@ -40,7 +40,7 @@
           <div class="bg-slate-900/90 border border-slate-700/80 p-5 rounded-2xl shadow-xl">
             <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Nível 2 • Decomposição Operacional</span>
             <div class="text-xl sm:text-2xl font-black text-white mt-1">
-              TICKET = <span class="text-amber-400">Itens / Cupom</span> × <span class="text-purple-400">Valor Médio</span>
+              TICKET = <span class="text-amber-400">Itens / Talão</span> × <span class="text-purple-400">Valor Médio</span>
             </div>
             <p class="text-xs text-slate-400 mt-2">
               Se o ticket caiu, ou o cliente levou menos produtos no cesto, ou comprou itens mais baratos.
@@ -67,7 +67,7 @@
           </div>
 
           <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl text-right shrink-0">
-            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Faturamento Resultante</span>
+            <span class="text-[10px] text-slate-400 font-semibold block uppercase">Faturação Resultante</span>
             <span class="text-2xl font-black text-emerald-600" x-text="formatEuro(vendaCalculada)"></span>
             <span class="text-[11px] text-slate-500 block" x-text="`Diferença: ${formatEuro(vendaCalculada - 120000)} face à base`"></span>
           </div>
@@ -79,7 +79,7 @@
           <div class="p-5 rounded-2xl bg-emerald-50/50 border border-emerald-200/80">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase text-emerald-800">1. Alavanca Clientes (Fluxo)</span>
-              <span class="text-sm font-black text-emerald-700" x-text="`${simClientes} cupons`"></span>
+              <span class="text-sm font-black text-emerald-700" x-text="`${simClientes} talões`"></span>
             </div>
             <p class="text-xs text-slate-500 mt-1">Quantos clientes passam pelas caixas no mês:</p>
             <input type="range" min="6000" max="11000" step="50" x-model.number="simClientes"
@@ -94,7 +94,7 @@
             </div>
           </div>
 
-          <!-- Alavanca 2: Itens por Cupom -->
+          <!-- Alavanca 2: Itens por Talão -->
           <div class="p-5 rounded-2xl bg-amber-50/50 border border-amber-200/80">
             <div class="flex items-center justify-between">
               <span class="text-xs font-bold uppercase text-amber-800">2. Itens por Cesto (Cupom)</span>
