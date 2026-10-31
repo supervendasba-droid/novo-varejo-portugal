@@ -78,53 +78,53 @@ class DocumentoConsultoriaAdmin(admin.ModelAdmin):
 # Modelos do Módulo Automóvel 360º
 @admin.register(EmpresaAutomovel)
 class EmpresaAutomovelAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'nif', 'localizacao', 'segmento_principal', 'faturacao_mensal')
+    list_display = ('nome', 'nif', 'localizacao', 'faturacao_mensal_global', 'fuga_mensal_mapeada')
     search_fields = ('nome', 'nif', 'localizacao')
-    list_filter = ('segmento_principal',)
 
 @admin.register(ViaturaStand)
 class ViaturaStandAdmin(admin.ModelAdmin):
-    list_display = ('matricula', 'modelo', 'tipo', 'dias_em_stock', 'custo_aquisicao', 'pvp_tabela', 'floor_plan_acumulado')
-    search_fields = ('matricula', 'modelo')
-    list_filter = ('tipo',)
+    list_display = ('matricula', 'viatura', 'dias_em_stock', 'custo_aquisicao', 'pvp_anunciado', 'status')
+    search_fields = ('matricula', 'viatura')
+    list_filter = ('status', 'regime_iva')
 
 @admin.register(OrdemOficina)
 class OrdemOficinaAdmin(admin.ModelAdmin):
-    list_display = ('numero_or', 'viatura', 'tecnico', 'horas_faturadas', 'taxa_ocupacao_percentual', 'margem_pecas_percentual', 'status')
-    search_fields = ('numero_or', 'viatura', 'tecnico')
-    list_filter = ('status',)
+    list_display = ('numero_or', 'cliente', 'viatura', 'horas_faturadas', 'valor_mao_obra', 'perda_margem_pecas')
+    search_fields = ('numero_or', 'cliente', 'viatura')
 
 @admin.register(SegmentoRentACar)
 class SegmentoRentACarAdmin(admin.ModelAdmin):
-    list_display = ('categoria', 'tamanho_frota', 'taxa_ocupacao_media', 'tarifa_media_diaria', 'revpav_real')
+    list_display = ('categoria', 'qtd_viaturas', 'taxa_ocupacao_atual', 'diaria_media', 'revpav_atual')
 
 @admin.register(AlertaAutomovel)
 class AlertaAutomovelAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'pilar', 'severidade', 'lido', 'data_alerta')
-    list_filter = ('pilar', 'severidade', 'lido')
+    list_display = ('titulo', 'setor', 'criticidade', 'impacto_euros', 'resolvido', 'criado_em')
+    list_filter = ('setor', 'criticidade', 'resolvido')
 
 # Modelos do Ecossistema Novo Varejo (Slide 87)
 @admin.register(AlavancaVenda)
 class AlavancaVendaAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'valor_atual', 'meta_otimizada', 'unidade', 'impacto_previsto_euros')
+    list_display = ('supermercado', 'mes_referencia', 'venda_total', 'num_clientes_fluxo', 'ticket_medio', 'alavanca_ofensora')
+    list_filter = ('alavanca_ofensora', 'mes_referencia')
 
 @admin.register(PlanoAcaoOperacional)
 class PlanoAcaoOperacionalAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'responsavel', 'prazo_dias', 'status', 'ganho_estimado_mensal')
-    list_filter = ('status',)
+    list_display = ('supermercado', 'problema', 'prioridade', 'responsavel', 'prazo_dias', 'status')
+    list_filter = ('prioridade', 'status')
 
 @admin.register(LayoutSupermercadoItem)
 class LayoutSupermercadoItemAdmin(admin.ModelAdmin):
-    list_display = ('zona', 'tipo_circulacao', 'indice_frio_calor', 'impacto_venda_m2')
+    list_display = ('zona', 'titulo', 'impacto_venda')
+    list_filter = ('zona',)
 
 @admin.register(RedeSetorialRanking)
 class RedeSetorialRankingAdmin(admin.ModelAdmin):
-    list_display = ('posicao', 'insignia', 'quota_mercado_pct', 'faturacao_estimada_milhoes')
+    list_display = ('posicao', 'grupo_insignia', 'faturacao_anual_milhoes', 'quota_mercado_pct', 'venda_m2_ano')
 
 @admin.register(OportunidadeIndustria)
 class OportunidadeIndustriaAdmin(admin.ModelAdmin):
-    list_display = ('produto', 'rede_retalho', 'taxa_rutura_linear_pct', 'potencial_sellout_adicional_mes')
+    list_display = ('categoria', 'marca_parceira', 'regiao_oportunidade', 'potencial_sellout_euros', 'taxa_rutura_linear')
 
 @admin.register(PortalClienteToken)
 class PortalClienteTokenAdmin(admin.ModelAdmin):
-    list_display = ('supermercado', 'token', 'ativo', 'criado_em')
+    list_display = ('supermercado', 'destinatario_nome', 'destinatario_email', 'ativo', 'criado_em')

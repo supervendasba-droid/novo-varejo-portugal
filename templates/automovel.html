@@ -20,7 +20,7 @@
         <div class="inline-flex items-center gap-1.5 p-1 rounded-full bg-slate-100 border border-slate-200 text-xs">
           <a href="{% url 'core:home' %}" class="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 transition-all flex items-center gap-1.5 font-medium">
             <i data-lucide="shopping-cart" class="w-3.5 h-3.5"></i>
-            <span>Retalho & Supermercados</span>
+            <span>Varejo & Supermercados</span>
           </a>
           <span class="px-4 py-1.5 rounded-full bg-slate-900 text-white font-bold shadow-xs flex items-center gap-1.5">
             <i data-lucide="car" class="w-3.5 h-3.5 text-[#7A7423]"></i>
@@ -96,7 +96,7 @@
                 <h3 class="text-lg sm:text-xl font-bold text-white tracking-tight flex items-center gap-2 mt-0.5">
                   {{ empresa.nome }}
                   <span class="text-xs font-normal text-slate-400 hidden md:inline">
-                    (Stand 35 Viaturas • Oficina 6 Elevadores • Rent-a-Car 48 Carros)
+                    (Stand 35 Veículos • Oficina 6 Elevadores • Rent-a-Car 48 Carros)
                   </span>
                 </h3>
               </div>
@@ -106,7 +106,7 @@
             <div class="flex flex-wrap items-center gap-3">
               <div class="bg-slate-800/80 border border-slate-700/80 px-4 py-2 rounded-2xl text-xs flex items-center gap-4">
                 <div>
-                  <span class="text-slate-400 block text-[10px] font-semibold uppercase">Faturação Global</span>
+                  <span class="text-slate-400 block text-[10px] font-semibold uppercase">Faturamento Global</span>
                   <span class="font-bold text-white text-sm">380.000 €/mês</span>
                 </div>
                 <div class="h-6 w-px bg-slate-700"></div>
@@ -129,7 +129,7 @@
 
           <!-- NAVEGAÇÃO DOS 5 ECRÃS -->
           <div class="mt-6 pt-4 border-t border-slate-800 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
-            <!-- Ecrã 1 -->
+            <!-- Tela 1 -->
             <button @click="setTab('pulso')"
                     :class="activeTab === 'pulso' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
                     class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
@@ -143,7 +143,7 @@
               </span>
             </button>
 
-            <!-- Ecrã 2 -->
+            <!-- Tela 2 -->
             <button @click="setTab('stand')"
                     :class="activeTab === 'stand' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
                     class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
@@ -153,11 +153,11 @@
               </div>
               <span class="text-[10px] font-extrabold px-1.5 py-0.5 rounded-full ml-1"
                     :class="activeTab === 'stand' ? 'bg-slate-950 text-white' : 'bg-slate-700 text-slate-300'">
-                {{ viaturas.count }} Carros
+                {{ veículos.count }} Carros
               </span>
             </button>
 
-            <!-- Ecrã 3 -->
+            <!-- Tela 3 -->
             <button @click="setTab('oficina')"
                     :class="activeTab === 'oficina' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
                     class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
@@ -171,7 +171,7 @@
               </span>
             </button>
 
-            <!-- Ecrã 4 -->
+            <!-- Tela 4 -->
             <button @click="setTab('rentacar')"
                     :class="activeTab === 'rentacar' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
                     class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
@@ -185,7 +185,7 @@
               </span>
             </button>
 
-            <!-- Ecrã 5 -->
+            <!-- Tela 5 -->
             <button @click="setTab('fiscal')"
                     :class="activeTab === 'fiscal' ? 'bg-sky-500 text-slate-950 font-bold shadow-md' : 'bg-slate-800/80 text-slate-300 hover:bg-slate-800'"
                     class="flex items-center justify-between p-3 rounded-2xl border border-transparent transition-all cursor-pointer text-left">
@@ -217,8 +217,8 @@
                 </div>
                 <div class="mt-3 flex items-baseline justify-between">
                   <div>
-                    <span class="text-xs text-slate-500 block">Viaturas em Pátio</span>
-                    <span class="text-xl font-black text-slate-900">{{ viaturas.count }} unidades</span>
+                    <span class="text-xs text-slate-500 block">Veículos em Pátio</span>
+                    <span class="text-xl font-black text-slate-900">{{ veículos.count }} unidades</span>
                   </div>
                   <div class="text-right">
                     <span class="text-xs text-slate-500 block">Fuga Mapeada</span>
@@ -337,7 +337,7 @@
                     </div>
                   </div>
                   <div class="pt-2 text-xs text-emerald-900 flex items-center justify-between font-medium">
-                    <span>Avença Mensal da Consultoria: <strong>1.800 €/mês</strong></span>
+                    <span>Assessoria Mensal Mensal da Consultoria: <strong>1.800 €/mês</strong></span>
                     <span class="font-bold text-emerald-700">Abatimento integral do Raio-X inicial</span>
                   </div>
                 </div>
@@ -354,20 +354,20 @@
                 <span class="text-xs font-bold uppercase tracking-wider text-sky-800">Polo Stand de Usados & Seminovos</span>
                 <h4 class="text-base font-bold text-slate-900 mt-0.5">Gestão de Aging e Custo de Dinheiro Parado (Floor Plan)</h4>
                 <p class="text-xs text-slate-600 mt-1 max-w-2xl">
-                  Cada dia com uma viatura no pátio custa juros bancários à taxa Euribor + spread (7,5% a.a.) além de depreciação de tabela. O sistema identifica os carros da "Curva C" (>60 dias) e calcula o deságio estratégico de venda rápida.
+                  Cada dia com uma veículo no pátio custa juros bancários à taxa Euribor + spread (7,5% a.a.) além de depreciação de tabela. O sistema identifica os carros da "Curva C" (>60 dias) e calcula o deságio estratégico de venda rápida.
                 </p>
               </div>
               <div class="bg-white border border-rose-200 rounded-xl p-3 shrink-0 text-right shadow-2xs">
                 <span class="text-[11px] text-slate-400 block font-medium">Juros Floor Plan Acumulados</span>
                 <span class="text-xl font-extrabold text-rose-600">{{ custo_floor_plan_total }} €</span>
-                <span class="text-[10px] text-slate-500 block">Em {{ viaturas.count }} viaturas auditadas</span>
+                <span class="text-[10px] text-slate-500 block">Em {{ veículos.count }} veículos auditadas</span>
               </div>
             </div>
 
-            <!-- Tabela Interativa de Viaturas -->
+            <!-- Tabela Interativa de Veículos -->
             <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
               <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-                <h5 class="text-sm font-bold text-slate-900">Viaturas Auditadas no Pátio (Stand)</h5>
+                <h5 class="text-sm font-bold text-slate-900">Veículos Auditadas no Pátio (Stand)</h5>
                 <span class="text-xs text-slate-500 font-medium">Clique em "Aplicar Deságio" para simular a libertação de capital</span>
               </div>
 
@@ -375,7 +375,7 @@
                 <table class="w-full text-left text-xs text-slate-600">
                   <thead class="bg-slate-50 text-[11px] font-bold text-slate-500 uppercase border-b border-slate-200">
                     <tr>
-                      <th class="py-3 px-4">Matrícula & Viatura</th>
+                      <th class="py-3 px-4">Matrícula & Veículo</th>
                       <th class="py-3 px-3 text-center">Aging (Dias)</th>
                       <th class="py-3 px-3 text-right">Custo Aquisição</th>
                       <th class="py-3 px-3 text-right">Floor Plan</th>
@@ -386,10 +386,10 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-slate-100">
-                    {% for v in viaturas %}
+                    {% for v in veículos %}
                     <tr class="hover:bg-slate-50 transition-colors {% if v.dias_em_stock >= 75 %}bg-rose-50/30{% endif %}">
                       <td class="py-3 px-4">
-                        <div class="font-bold text-slate-900">{{ v.viatura }}</div>
+                        <div class="font-bold text-slate-900">{{ v.veículo }}</div>
                         <div class="text-[11px] text-slate-400 font-mono">{{ v.matricula }} • {{ v.ano }} • {{ v.kms }} km</div>
                       </td>
                       <td class="py-3 px-3 text-center">
@@ -439,7 +439,7 @@
                     </span>
                   </div>
                   <p class="text-xs text-slate-600 mt-3 leading-relaxed">
-                    A <strong>Taxa de Absorção</strong> mede se a margem bruta da oficina e da venda de peças consegue pagar 100% dos custos fixos de toda a concessão (renda, luz, equipa administrativa e custos do stand). Quando atinge 100%, cada carro vendido no stand é lucro puro!
+                    A <strong>Taxa de Absorção</strong> mede se a margem bruta da oficina e da venda de peças consegue pagar 100% dos custos fixos de toda a concessão (renda, luz, equipe administrativa e custos do stand). Quando atinge 100%, cada carro vendido no stand é lucro puro!
                   </p>
 
                   <div class="mt-4 space-y-3">
@@ -480,7 +480,7 @@
                     {% for o in ordens %}
                     <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs flex items-center justify-between">
                       <div>
-                        <span class="font-bold text-slate-900">{{ o.numero_or }}</span> • <span class="text-slate-600">{{ o.viatura }}</span>
+                        <span class="font-bold text-slate-900">{{ o.numero_or }}</span> • <span class="text-slate-600">{{ o.veículo }}</span>
                         <div class="text-[10px] text-slate-400">{{ o.tipo_servico }}</div>
                       </div>
                       <div class="text-right">
@@ -506,7 +506,7 @@
                   <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
                     {{ s.categoria }}
                   </span>
-                  <div class="text-sm font-bold text-slate-900 mt-2">{{ s.qtd_viaturas }} Viaturas na Frota</div>
+                  <div class="text-sm font-bold text-slate-900 mt-2">{{ s.qtd_viaturas }} Veículos na Frota</div>
                   <div class="text-xs text-slate-500 mt-0.5">{{ s.viaturas_exemplo }}</div>
 
                   <div class="mt-4 space-y-2 pt-3 border-t border-slate-100 text-xs">
@@ -595,17 +595,17 @@
       <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-md">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Stand (€/mês):</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturamento Stand (€/mês):</label>
             <input type="number" x-model.number="calcStand"
                    class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Oficina (€/mês):</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturamento Oficina (€/mês):</label>
             <input type="number" x-model.number="calcOficina"
                    class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
           </div>
           <div>
-            <label class="block text-xs font-bold text-slate-700 mb-1">Faturação Rent-a-Car (€/mês):</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Faturamento Rent-a-Car (€/mês):</label>
             <input type="number" x-model.number="calcRent"
                    class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-sky-500">
           </div>

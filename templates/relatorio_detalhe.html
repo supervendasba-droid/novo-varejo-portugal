@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ relatorio.codigo_doc }} • Dossiê de Auditoria Retalho Portugal{% endblock %}
+{% block title %}{{ relatorio.codigo_doc }} • Dossiê de Auditoria Varejo Portugal{% endblock %}
 
 {% block content %}
 <div class="bg-slate-100/60 py-8 lg:py-12">
@@ -25,7 +25,7 @@
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6 border-b-2 border-slate-900">
         <div>
           <span class="text-xs font-extrabold uppercase tracking-widest text-emerald-700 block">
-            Vértice Retalho Portugal • Gabinete de Auditoria Operacional
+            Vértice Varejo Portugal • Gabinete de Auditoria Operacional
           </span>
           <h1 class="text-xl sm:text-2xl font-black text-slate-900 mt-1 leading-tight">
             {{ relatorio.titulo }}
@@ -35,7 +35,7 @@
           </p>
         </div>
         <div class="text-left sm:text-right shrink-0 bg-slate-50 p-3 rounded-2xl border border-slate-200">
-          <span class="text-[10px] font-bold text-slate-400 uppercase block">Registo Documental</span>
+          <span class="text-[10px] font-bold text-slate-400 uppercase block">Registro Documental</span>
           <span class="text-sm font-black text-slate-900 block">{{ relatorio.codigo_doc }}</span>
           <span class="text-xs text-slate-500 block">{{ relatorio.criado_em|date:"d/m/Y" }}</span>
         </div>
@@ -107,7 +107,7 @@
                 <span class="text-[11px] font-bold text-emerald-800 tracking-wider">CERTIFICADO DIGITALMENTE ✓</span>
               </div>
               <p class="font-bold text-slate-900 mt-2">{{ relatorio.assinado_por }}</p>
-              <p class="text-[10px] text-slate-500">Auditor Principal • Vértice Retalho Portugal</p>
+              <p class="text-[10px] text-slate-500">Auditor Principal • Vértice Varejo Portugal</p>
             </div>
           </div>
         </div>

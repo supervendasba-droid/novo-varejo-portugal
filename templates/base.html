@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-PT" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -165,7 +165,7 @@
   <!-- Cabeçalho Principal Oficial Falconi (Header Preto com Links Brancos e Destaque Oliva) -->
   <header class="sticky top-0 z-40 bg-black text-white border-b border-neutral-900 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <!-- Logótipo da Marca - Estilo Falconi Oficial -->
+      <!-- Logotipo da Marca - Estilo Falconi Oficial -->
       <a href="{% url 'core:home' %}" class="flex items-center gap-3.5 group">
         <div>
           <span class="text-2xl font-black tracking-tight text-white block leading-none">
@@ -249,7 +249,7 @@
             </div>
           </div>
           <p class="text-xs text-slate-500 leading-relaxed">
-            Consultoria empresarial de elite especializada na recuperação de margem, auditoria de frescos e inteligência de dados (SAF-T) para supermercados e retalho de proximidade em Portugal.
+            Consultoria empresarial de elite especializada na recuperação de margem, auditoria de frescos e inteligência de dados (SAF-T) para supermercados e varejo de proximidade em Portugal.
           </p>
           <div class="text-[11px] text-slate-500 space-y-1 pt-1">
             <p><strong>Gabinete Lisboa:</strong> Av. da Liberdade n.º 245, 4.º Andar</p>
@@ -264,9 +264,9 @@
           <ul class="space-y-2 text-xs text-slate-500">
             <li><a href="{% url 'core:home' %}#diagnostico-360" class="hover:text-slate-900 transition-colors">Diagnóstico Raio-X 360º (15 Dias)</a></li>
             <li><a href="{% url 'core:home' %}#painel-bi" class="hover:text-slate-900 transition-colors">Plataforma Retail Intelligence 360º</a></li>
-            <li><a href="{% url 'core:verificacao' %}" class="hover:text-slate-900 transition-colors">Auditoria de Cais e Talho (Checklists)</a></li>
+            <li><a href="{% url 'core:verificacao' %}" class="hover:text-slate-900 transition-colors">Auditoria de Cais e Açougue (Checklists)</a></li>
             <li><a href="{% url 'core:relatorios_lista' %}" class="hover:text-slate-900 transition-colors">Autos de Abate de Quebras (Art.º 86.º CIVA)</a></li>
-            <li><a href="{% url 'core:documentos' %}" class="hover:text-slate-900 transition-colors">Fichas Técnicas de Desmanche de Carnes</a></li>
+            <li><a href="{% url 'core:documentos' %}" class="hover:text-slate-900 transition-colors">Fichas Técnicas de Desossa de Carnes</a></li>
           </ul>
         </div>
 
@@ -282,16 +282,16 @@
           </ul>
         </div>
 
-        <!-- Coluna 4: Contacto e Atendimento -->
+        <!-- Coluna 4: Contato e Atendimento -->
         <div class="space-y-3">
-          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Contacto Direto</h4>
+          <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider">Contato Direto</h4>
           <p class="text-xs text-slate-500 leading-relaxed">
             Fale diretamente com o consultor sénior para analisar confidencialmente as perdas da sua loja:
           </p>
           <button @click="modalLead = true"
                   class="w-full py-2.5 rounded-full bg-slate-900 hover:bg-black text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer shadow-sm transition-all">
             <i data-lucide="phone-call" class="w-3.5 h-3.5 text-[#84CC16]"></i>
-            <span>Pedir Contacto Telefónico</span>
+            <span>Pedir Contato Telefónico</span>
           </button>
           <div class="pt-2">
             <p class="text-[11px] text-slate-400">Horário de Atendimento Executivo:</p>
@@ -341,13 +341,13 @@
       </div>
 
       <p class="text-xs text-slate-600 mb-5">
-        Selecione o volume de faturação da sua loja em Portugal para ver a projeção média de dinheiro vivo a recuperar por mês:
+        Selecione o volume de faturamento da sua loja em Portugal para ver a projeção média de dinheiro vivo a recuperar por mês:
       </p>
 
       <div class="space-y-4">
         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
           <div class="flex justify-between text-xs font-bold mb-2">
-            <span class="text-slate-600">Faturação Mensal Líquida:</span>
+            <span class="text-slate-600">Faturamento Mensal Líquida:</span>
             <span class="text-[#07050B] font-extrabold text-sm" x-text="formatEuro(simulacaoValor) + '/mês'"></span>
           </div>
           <input type="range" min="60000" max="350000" step="10000" x-model.number="simulacaoValor"
@@ -363,7 +363,7 @@
           <div>
             <span class="text-[10px] text-slate-600 font-bold uppercase block">Fuga Mapeada / Mês</span>
             <span class="text-xl font-black text-rose-600 mt-1 block" x-text="'-' + formatEuro(simulacaoValor * 0.05)"></span>
-            <span class="text-[10px] text-slate-500">Perdido no cais e no talho</span>
+            <span class="text-[10px] text-slate-500">Perdido no cais e no açougue</span>
           </div>
           <div>
             <span class="text-[10px] text-slate-600 font-bold uppercase block">Recuperação em 90d</span>
@@ -400,7 +400,7 @@
           </div>
           <h3 class="text-xl font-bold text-slate-900">Pedido Registado com Sucesso!</h3>
           <p class="text-xs text-slate-600 max-w-xs mx-auto">
-            O consultor sénior Regis Costa entrará em contacto nas próximas 2 horas úteis para coordenar a análise confidencial do ficheiro SAF-T da sua loja.
+            O consultor sénior Regis Costa entrará em contato nas próximas 2 horas úteis para coordenar a análise confidencial do ficheiro SAF-T da sua loja.
           </p>
         </div>
       </template>
@@ -409,7 +409,7 @@
         <div>
           <div class="mb-5">
             <span class="text-[10px] font-extrabold uppercase tracking-wider text-[#07050B] bg-[#ACE833]/20 px-2.5 py-0.5 rounded-full border border-[#ACE833]/40">
-              Garantia de 100% de Abatimento na Avença
+              Garantia de 100% de Abatimento na Assessoria Mensal
             </span>
             <h3 class="text-xl font-bold text-slate-900 mt-1">
               Agendar Diagnóstico Raio-X 360º
@@ -436,12 +436,12 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-[11px] font-bold text-slate-700 block mb-1">Telemóvel / WhatsApp</label>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Celular / WhatsApp</label>
                 <input type="tel" required x-model="leadForm.telemovel" placeholder="ex.: 912 345 678"
                        class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
               </div>
               <div>
-                <label class="text-[11px] font-bold text-slate-700 block mb-1">Correio Eletrónico</label>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">E-mail</label>
                 <input type="email" required x-model="leadForm.email" placeholder="ex.: gerencia@supermercado.pt"
                        class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
               </div>
@@ -449,7 +449,7 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="text-[11px] font-bold text-slate-700 block mb-1">Concelho / Região</label>
+                <label class="text-[11px] font-bold text-slate-700 block mb-1">Município / Região</label>
                 <select x-model="leadForm.distrito"
                         class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-900 focus:outline-none focus:border-[#7A7423]">
                   <option>Lisboa / Grande Lisboa</option>
@@ -469,7 +469,7 @@
                   <option>ETPOS (Sysdev / Marques)</option>
                   <option>WinRest / Colibri</option>
                   <option>Primavera BSS / Cegid</option>
-                  <option>XD Software Retalho</option>
+                  <option>XD Software Varejo</option>
                   <option>SAGE 50c</option>
                   <option>Zonesoft / Ponto25</option>
                   <option>Outro Sistema POS</option>
@@ -479,7 +479,7 @@
 
             <div>
               <label class="text-[11px] font-bold text-slate-700 block mb-1">Observações Operacionais (Opcional)</label>
-              <textarea rows="2" x-model="leadForm.mensagem" placeholder="ex.: Temos dúvidas nas quebras do talho e suspeitamos de custo de reposição nos azeites."
+              <textarea rows="2" x-model="leadForm.mensagem" placeholder="ex.: Temos dúvidas nas quebras do açougue e suspeitamos de custo de reposição nos azeites."
                         class="w-full text-xs bg-slate-50 border border-slate-200 rounded-xl p-2 text-slate-900 focus:outline-none focus:border-[#7A7423]"></textarea>
             </div>
 
